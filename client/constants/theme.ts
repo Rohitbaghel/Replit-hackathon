@@ -1,30 +1,37 @@
 import { Platform } from "react-native";
 
-const tintColorLight = "#007AFF";
-const tintColorDark = "#0A84FF";
-
 export const Colors = {
   light: {
-    text: "#11181C",
+    text: "#0A0E14",
+    textSecondary: "#6B7280",
     buttonText: "#FFFFFF",
-    tabIconDefault: "#687076",
-    tabIconSelected: tintColorLight,
-    link: "#007AFF",
-    backgroundRoot: "#FFFFFF", // Elevation 0
-    backgroundDefault: "#F2F2F2", // Elevation 1
-    backgroundSecondary: "#E6E6E6", // Elevation 2
-    backgroundTertiary: "#D9D9D9", // Elevation 3
+    tabIconDefault: "#6B7280",
+    tabIconSelected: "#0088FF",
+    link: "#0088FF",
+    accent: "#FF1744",
+    success: "#00C853",
+    backgroundRoot: "#FFFFFF",
+    backgroundDefault: "#F5F7FA",
+    backgroundSecondary: "#E8ECF0",
+    backgroundTertiary: "#D9DEE5",
+    border: "#E0E4E8",
+    primary: "#0088FF",
   },
   dark: {
-    text: "#ECEDEE",
-    buttonText: "#FFFFFF",
-    tabIconDefault: "#9BA1A6",
-    tabIconSelected: tintColorDark,
-    link: "#0A84FF",
-    backgroundRoot: "#1F2123", // Elevation 0
-    backgroundDefault: "#2A2C2E", // Elevation 1
-    backgroundSecondary: "#353739", // Elevation 2
-    backgroundTertiary: "#404244", // Elevation 3
+    text: "#FFFFFF",
+    textSecondary: "#8B92A8",
+    buttonText: "#0A0E14",
+    tabIconDefault: "#8B92A8",
+    tabIconSelected: "#00F0FF",
+    link: "#00F0FF",
+    accent: "#FF3366",
+    success: "#00FF88",
+    backgroundRoot: "#0A0E14",
+    backgroundDefault: "#1A1F2E",
+    backgroundSecondary: "#252B3D",
+    backgroundTertiary: "#2A3244",
+    border: "#2A3244",
+    primary: "#00F0FF",
   },
 };
 
@@ -54,65 +61,98 @@ export const BorderRadius = {
 };
 
 export const Typography = {
-  h1: {
-    fontSize: 32,
-    lineHeight: 40,
-    fontWeight: "700" as const,
+  display: {
+    fontSize: 48,
+    lineHeight: 56,
+    fontWeight: "800" as const,
+    fontFamily: "LexendDeca_800ExtraBold",
   },
-  h2: {
+  h1: {
     fontSize: 28,
     lineHeight: 36,
     fontWeight: "700" as const,
+    fontFamily: "LexendDeca_700Bold",
   },
-  h3: {
+  h2: {
     fontSize: 24,
     lineHeight: 32,
-    fontWeight: "600" as const,
+    fontWeight: "700" as const,
+    fontFamily: "LexendDeca_700Bold",
   },
-  h4: {
+  h3: {
     fontSize: 20,
     lineHeight: 28,
     fontWeight: "600" as const,
+    fontFamily: "LexendDeca_600SemiBold",
+  },
+  h4: {
+    fontSize: 18,
+    lineHeight: 26,
+    fontWeight: "600" as const,
+    fontFamily: "LexendDeca_600SemiBold",
   },
   body: {
     fontSize: 16,
     lineHeight: 24,
     fontWeight: "400" as const,
+    fontFamily: "LexendDeca_400Regular",
   },
   small: {
     fontSize: 14,
     lineHeight: 20,
     fontWeight: "400" as const,
+    fontFamily: "LexendDeca_400Regular",
+  },
+  label: {
+    fontSize: 12,
+    lineHeight: 16,
+    fontWeight: "500" as const,
+    fontFamily: "LexendDeca_500Medium",
+    textTransform: "uppercase" as const,
+    letterSpacing: 1,
   },
   link: {
     fontSize: 16,
     lineHeight: 24,
     fontWeight: "400" as const,
+    fontFamily: "LexendDeca_400Regular",
   },
 };
 
 export const Fonts = Platform.select({
   ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: "system-ui",
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
+    sans: "LexendDeca_400Regular",
     serif: "ui-serif",
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
     rounded: "ui-rounded",
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
     mono: "ui-monospace",
   },
   default: {
-    sans: "normal",
+    sans: "LexendDeca_400Regular",
     serif: "serif",
-    rounded: "normal",
+    rounded: "LexendDeca_400Regular",
     mono: "monospace",
   },
   web: {
-    sans: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+    sans: "LexendDeca_400Regular, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
     serif: "Georgia, 'Times New Roman', serif",
-    rounded:
-      "'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif",
+    rounded: "LexendDeca_400Regular, 'SF Pro Rounded', sans-serif",
     mono: "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
   },
 });
+
+export const Shadows = {
+  fab: {
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 4,
+  },
+  card: {
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+};

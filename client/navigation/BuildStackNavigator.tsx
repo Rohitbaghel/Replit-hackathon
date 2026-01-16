@@ -1,25 +1,26 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from "@/screens/HomeScreen";
+
+import BuildScreen from "@/screens/BuildScreen";
 import { HeaderTitle } from "@/components/HeaderTitle";
 import { useScreenOptions } from "@/hooks/useScreenOptions";
 
-export type HomeStackParamList = {
-  Home: undefined;
+export type BuildStackParamList = {
+  Build: undefined;
 };
 
-const Stack = createNativeStackNavigator<HomeStackParamList>();
+const Stack = createNativeStackNavigator<BuildStackParamList>();
 
-export default function HomeStackNavigator() {
+export default function BuildStackNavigator() {
   const screenOptions = useScreenOptions();
 
   return (
     <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen
-        name="Home"
-        component={HomeScreen}
+        name="Build"
+        component={BuildScreen}
         options={{
-          headerTitle: () => <HeaderTitle title="My App" />,
+          headerTitle: () => <HeaderTitle title="HackSprint" />,
         }}
       />
     </Stack.Navigator>

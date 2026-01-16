@@ -3,13 +3,16 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Feather } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import { Platform, StyleSheet } from "react-native";
-import HomeStackNavigator from "@/navigation/HomeStackNavigator";
-import ProfileStackNavigator from "@/navigation/ProfileStackNavigator";
+
+import IdeaStackNavigator from "@/navigation/IdeaStackNavigator";
+import BuildStackNavigator from "@/navigation/BuildStackNavigator";
+import PresentStackNavigator from "@/navigation/PresentStackNavigator";
 import { useTheme } from "@/hooks/useTheme";
 
 export type MainTabParamList = {
-  HomeTab: undefined;
-  ProfileTab: undefined;
+  IdeaTab: undefined;
+  BuildTab: undefined;
+  PresentTab: undefined;
 };
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
@@ -19,7 +22,7 @@ export default function MainTabNavigator() {
 
   return (
     <Tab.Navigator
-      initialRouteName="HomeTab"
+      initialRouteName="BuildTab"
       screenOptions={{
         tabBarActiveTintColor: theme.tabIconSelected,
         tabBarInactiveTintColor: theme.tabIconDefault,
@@ -44,22 +47,32 @@ export default function MainTabNavigator() {
       }}
     >
       <Tab.Screen
-        name="HomeTab"
-        component={HomeStackNavigator}
+        name="IdeaTab"
+        component={IdeaStackNavigator}
         options={{
-          title: "Home",
+          title: "Idea",
           tabBarIcon: ({ color, size }) => (
-            <Feather name="home" size={size} color={color} />
+            <Feather name="zap" size={size} color={color} />
           ),
         }}
       />
       <Tab.Screen
-        name="ProfileTab"
-        component={ProfileStackNavigator}
+        name="BuildTab"
+        component={BuildStackNavigator}
         options={{
-          title: "Profile",
+          title: "Build",
           tabBarIcon: ({ color, size }) => (
-            <Feather name="user" size={size} color={color} />
+            <Feather name="code" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="PresentTab"
+        component={PresentStackNavigator}
+        options={{
+          title: "Present",
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="mic" size={size} color={color} />
           ),
         }}
       />

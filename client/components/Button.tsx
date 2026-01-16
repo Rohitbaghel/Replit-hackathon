@@ -9,13 +9,14 @@ import Animated, {
 
 import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@/hooks/useTheme";
-import { BorderRadius, Spacing } from "@/constants/theme";
+import { BorderRadius, Spacing, Typography } from "@/constants/theme";
 
 interface ButtonProps {
   onPress?: () => void;
   children: ReactNode;
   style?: StyleProp<ViewStyle>;
   disabled?: boolean;
+  variant?: "primary" | "secondary";
 }
 
 const springConfig: WithSpringConfig = {
@@ -33,6 +34,7 @@ export function Button({
   children,
   style,
   disabled = false,
+  variant = "primary",
 }: ButtonProps) {
   const { theme } = useTheme();
   const scale = useSharedValue(1);
@@ -43,7 +45,7 @@ export function Button({
 
   const handlePressIn = () => {
     if (!disabled) {
-      scale.value = withSpring(0.98, springConfig);
+      scale.value = withSpring(0.95, springConfig);
     }
   };
 
@@ -52,6 +54,9 @@ export function Button({
       scale.value = withSpring(1, springConfig);
     }
   };
+
+  const backgroundColor = variant === "primary" ? theme.primary : theme.backgroundDefault;
+  const textColor = variant === "primary" ? theme.backgroundRoot : theme.text;
 
   return (
     <AnimatedPressable
@@ -62,7 +67,7 @@ export function Button({
       style={[
         styles.button,
         {
-          backgroundColor: theme.link,
+          backgroundColor,
           opacity: disabled ? 0.5 : 1,
         },
         style,
@@ -71,7 +76,10 @@ export function Button({
     >
       <ThemedText
         type="body"
-        style={[styles.buttonText, { color: theme.buttonText }]}
+        style={[
+          styles.buttonText,
+          { color: textColor, fontFamily: Typography.h4.fontFamily },
+        ]}
       >
         {children}
       </ThemedText>
@@ -82,7 +90,7 @@ export function Button({
 const styles = StyleSheet.create({
   button: {
     height: Spacing.buttonHeight,
-    borderRadius: BorderRadius.full,
+    borderRadius: BorderRadius.md,
     alignItems: "center",
     justifyContent: "center",
   },
