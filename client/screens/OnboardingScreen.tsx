@@ -42,8 +42,10 @@ export default function OnboardingScreen() {
   const flatListRef = useRef<FlatList>(null);
 
   const handleNext = () => {
-    if (activeIndex < ONBOARDING_PAGES.length - 1) {
-      flatListRef.current?.scrollToIndex({ index: activeIndex + 1 });
+    const nextIndex = activeIndex + 1;
+    if (nextIndex < ONBOARDING_PAGES.length) {
+      flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
+      setActiveIndex(nextIndex); // Explicitly update state on button press
     } else {
       completeOnboarding();
     }
