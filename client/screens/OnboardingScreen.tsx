@@ -7,21 +7,31 @@ const { width } = Dimensions.get('window');
 const ONBOARDING_PAGES = [
   {
     id: '1',
+    step: 'Step 1',
     title: 'Manage Your Cards',
     subtitle: 'Keep all your bank cards in one secure place without sensitive data.',
-    image: 'https://placehold.co/600x600/007AFF/white.png?text=Manage+Cards',
+    image: 'https://placehold.co/600x600/007AFF/white.png?text=Step+1',
   },
   {
     id: '2',
+    step: 'Step 2',
     title: 'Track Spending',
     subtitle: 'See your card types and details at a glance with a clean UI.',
-    image: 'https://placehold.co/600x600/34C759/white.png?text=Track+Spending',
+    image: 'https://placehold.co/600x600/34C759/white.png?text=Step+2',
   },
   {
     id: '3',
+    step: 'Step 3',
+    title: 'Analyze Trends',
+    subtitle: 'Understand your financial habits with powerful analytics.',
+    image: 'https://placehold.co/600x600/5856D6/white.png?text=Step+3',
+  },
+  {
+    id: '4',
+    step: 'Step 4',
     title: 'Get Started Now',
     subtitle: 'Join thousands of users managing their finances better.',
-    image: 'https://placehold.co/600x600/FF9500/white.png?text=Get+Started',
+    image: 'https://placehold.co/600x600/FF9500/white.png?text=Step+4',
     isLast: true,
   },
 ];
@@ -63,13 +73,14 @@ export default function OnboardingScreen() {
         scrollEventThrottle={16}
         renderItem={({ item }) => (
           <View style={styles.page}>
+            <Text style={styles.stepLabel}>{item.step}</Text>
             <Image source={{ uri: item.image }} style={styles.image} />
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.subtitle}>{item.subtitle}</Text>
             
             {item.isLast && (
               <TouchableOpacity style={styles.button} onPress={completeOnboarding}>
-                <Text style={styles.buttonText}>Get Started</Text>
+                <Text style={styles.buttonText}>Start</Text>
               </TouchableOpacity>
             )}
           </View>
@@ -121,6 +132,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#666',
     lineHeight: 24,
+  },
+  stepLabel: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#007AFF',
+    marginBottom: 10,
+    textTransform: 'uppercase',
   },
   button: {
     marginTop: 40,
