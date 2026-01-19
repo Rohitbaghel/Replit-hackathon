@@ -3,7 +3,7 @@ import { View, TextInput, StyleSheet } from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@/hooks/useTheme";
-import { Spacing, BorderRadius, Typography } from "@/constants/theme";
+import { Spacing, BorderRadius } from "@/constants/theme";
 
 interface TextAreaProps {
   label: string;
@@ -34,7 +34,10 @@ export function TextArea({
           <ThemedText
             type="small"
             style={{
-              color: value.length > maxLength * 0.9 ? theme.accent : theme.textSecondary,
+              color:
+                value.length > maxLength * 0.9
+                  ? theme.accent
+                  : theme.textSecondary,
             }}
           >
             {value.length}/{maxLength}
@@ -55,7 +58,6 @@ export function TextArea({
             borderColor: theme.border,
             color: theme.text,
             minHeight,
-            fontFamily: Typography.body.fontFamily,
           },
         ]}
         textAlignVertical="top"

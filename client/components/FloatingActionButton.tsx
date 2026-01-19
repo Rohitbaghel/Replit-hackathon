@@ -18,7 +18,10 @@ interface FloatingActionButtonProps {
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export function FloatingActionButton({ onPress, bottom }: FloatingActionButtonProps) {
+export function FloatingActionButton({
+  onPress,
+  bottom,
+}: FloatingActionButtonProps) {
   const { theme } = useTheme();
   const scale = useSharedValue(1);
 

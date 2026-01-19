@@ -68,7 +68,7 @@ export default function BuildScreen() {
 
   const handleToggleTask = async (id: string) => {
     const newTasks = tasks.map((task) =>
-      task.id === id ? { ...task, completed: !task.completed } : task
+      task.id === id ? { ...task, completed: !task.completed } : task,
     );
     setTasks(newTasks);
     await storage.saveTasks(newTasks);
@@ -89,7 +89,10 @@ export default function BuildScreen() {
         <Pressable
           onPress={() => navigation.navigate("Settings")}
           hitSlop={8}
-          style={[styles.settingsButton, { backgroundColor: theme.backgroundDefault }]}
+          style={[
+            styles.settingsButton,
+            { backgroundColor: theme.backgroundDefault },
+          ]}
         >
           <Feather name="settings" size={20} color={theme.text} />
         </Pressable>
@@ -110,7 +113,9 @@ export default function BuildScreen() {
 
   if (!loaded) {
     return (
-      <View style={[styles.container, { backgroundColor: theme.backgroundRoot }]} />
+      <View
+        style={[styles.container, { backgroundColor: theme.backgroundRoot }]}
+      />
     );
   }
 

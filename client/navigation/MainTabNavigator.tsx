@@ -35,6 +35,9 @@ export default function MainTabNavigator() {
           borderTopWidth: 0,
           elevation: 0,
         },
+        tabBarLabelStyle: {
+          fontWeight: "500",
+        },
         tabBarBackground: () =>
           Platform.OS === "ios" ? (
             <BlurView

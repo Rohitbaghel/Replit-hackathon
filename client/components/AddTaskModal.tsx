@@ -14,7 +14,7 @@ import * as Haptics from "expo-haptics";
 import { ThemedText } from "@/components/ThemedText";
 import { Button } from "@/components/Button";
 import { useTheme } from "@/hooks/useTheme";
-import { Spacing, BorderRadius, Typography } from "@/constants/theme";
+import { Spacing, BorderRadius } from "@/constants/theme";
 
 interface AddTaskModalProps {
   visible: boolean;
@@ -53,10 +53,7 @@ export function AddTaskModal({ visible, onClose, onAdd }: AddTaskModalProps) {
       >
         <Pressable style={styles.backdrop} onPress={handleClose} />
         <View
-          style={[
-            styles.content,
-            { backgroundColor: theme.backgroundDefault },
-          ]}
+          style={[styles.content, { backgroundColor: theme.backgroundDefault }]}
         >
           <View style={styles.header}>
             <ThemedText type="h3">Add Task</ThemedText>
@@ -75,7 +72,6 @@ export function AddTaskModal({ visible, onClose, onAdd }: AddTaskModalProps) {
                 backgroundColor: theme.backgroundSecondary,
                 borderColor: theme.border,
                 color: theme.text,
-                fontFamily: Typography.body.fontFamily,
               },
             ]}
             autoFocus

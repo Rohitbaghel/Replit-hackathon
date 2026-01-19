@@ -26,10 +26,10 @@ export function AutoSaveIndicator({ saving }: AutoSaveIndicatorProps) {
       opacity.value = withRepeat(
         withSequence(
           withTiming(0.3, { duration: 400, easing: Easing.inOut(Easing.ease) }),
-          withTiming(1, { duration: 400, easing: Easing.inOut(Easing.ease) })
+          withTiming(1, { duration: 400, easing: Easing.inOut(Easing.ease) }),
         ),
         -1,
-        true
+        true,
       );
     } else {
       opacity.value = withTiming(1, { duration: 200 });

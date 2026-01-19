@@ -36,11 +36,19 @@ export interface SettingsData {
 }
 
 const DEFAULT_DEMO_CHECKLIST = [
-  { id: "1", label: "Hook - Grab attention in first 10 seconds", checked: false },
+  {
+    id: "1",
+    label: "Hook - Grab attention in first 10 seconds",
+    checked: false,
+  },
   { id: "2", label: "Problem - Clearly state the pain point", checked: false },
   { id: "3", label: "Solution - Show how you solve it", checked: false },
   { id: "4", label: "Wow Moment - Demonstrate the magic", checked: false },
-  { id: "5", label: "Call to Action - What do you want from judges", checked: false },
+  {
+    id: "5",
+    label: "Call to Action - What do you want from judges",
+    checked: false,
+  },
 ];
 
 export const storage = {
@@ -98,9 +106,7 @@ export const storage = {
   async getSettings(): Promise<SettingsData> {
     try {
       const data = await AsyncStorage.getItem(STORAGE_KEYS.SETTINGS);
-      return data
-        ? JSON.parse(data)
-        : { teamName: "", hackathonEndTime: null };
+      return data ? JSON.parse(data) : { teamName: "", hackathonEndTime: null };
     } catch {
       return { teamName: "", hackathonEndTime: null };
     }

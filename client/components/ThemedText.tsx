@@ -6,7 +6,19 @@ import { Typography } from "@/constants/theme";
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
-  type?: "display" | "h1" | "h2" | "h3" | "h4" | "body" | "small" | "label" | "link";
+  type?:
+    | "display"
+    | "h1"
+    | "h2"
+    | "h3"
+    | "h4"
+    | "body"
+    | "small"
+    | "label"
+    | "link"
+    | "subtitle"
+    | "cta"
+    | "amount";
 };
 
 export function ThemedText({
@@ -54,6 +66,12 @@ export function ThemedText({
         return Typography.label;
       case "link":
         return Typography.link;
+      case "subtitle":
+        return Typography.subtitle;
+      case "cta":
+        return Typography.cta;
+      case "amount":
+        return Typography.amount;
       default:
         return Typography.body;
     }

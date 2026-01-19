@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, Image } from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
-import { Spacing, Typography } from "@/constants/theme";
+import { Spacing } from "@/constants/theme";
 
 interface HeaderTitleProps {
   title: string;
@@ -36,6 +36,5 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 17,
     fontWeight: "600",
-    fontFamily: Typography.h4.fontFamily,
   },
 });

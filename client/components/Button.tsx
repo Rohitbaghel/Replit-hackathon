@@ -9,7 +9,7 @@ import Animated, {
 
 import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@/hooks/useTheme";
-import { BorderRadius, Spacing, Typography } from "@/constants/theme";
+import { BorderRadius, Spacing } from "@/constants/theme";
 
 interface ButtonProps {
   onPress?: () => void;
@@ -55,7 +55,8 @@ export function Button({
     }
   };
 
-  const backgroundColor = variant === "primary" ? theme.primary : theme.backgroundDefault;
+  const backgroundColor =
+    variant === "primary" ? theme.primary : theme.backgroundDefault;
   const textColor = variant === "primary" ? theme.backgroundRoot : theme.text;
 
   return (
@@ -74,13 +75,7 @@ export function Button({
         animatedStyle,
       ]}
     >
-      <ThemedText
-        type="body"
-        style={[
-          styles.buttonText,
-          { color: textColor, fontFamily: Typography.h4.fontFamily },
-        ]}
-      >
+      <ThemedText type="body" style={[styles.buttonText, { color: textColor }]}>
         {children}
       </ThemedText>
     </AnimatedPressable>
@@ -95,6 +90,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonText: {
-    fontWeight: "600",
+    fontWeight: "700",
   },
 });

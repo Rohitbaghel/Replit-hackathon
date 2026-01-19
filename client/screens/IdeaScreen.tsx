@@ -53,7 +53,9 @@ export default function IdeaScreen() {
 
   if (!loaded) {
     return (
-      <View style={[styles.container, { backgroundColor: theme.backgroundRoot }]} />
+      <View
+        style={[styles.container, { backgroundColor: theme.backgroundRoot }]}
+      />
     );
   }
 

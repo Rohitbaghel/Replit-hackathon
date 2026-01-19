@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   buttonText: {
-    fontWeight: "600",
+    fontWeight: "700",
     textAlign: "center",
     fontSize: 16,
   },

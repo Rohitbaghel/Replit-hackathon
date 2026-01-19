@@ -11,7 +11,7 @@ import Animated, {
 
 import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@/hooks/useTheme";
-import { Spacing, BorderRadius, Typography } from "@/constants/theme";
+import { Spacing, BorderRadius } from "@/constants/theme";
 
 interface CountdownTimerProps {
   endTime: number | null;
@@ -19,7 +19,11 @@ interface CountdownTimerProps {
 
 export function CountdownTimer({ endTime }: CountdownTimerProps) {
   const { theme } = useTheme();
-  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
+  const [timeLeft, setTimeLeft] = useState({
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
   const pulse = useSharedValue(1);
 
   const isUrgent = timeLeft.hours < 3 && endTime !== null;
@@ -45,11 +49,14 @@ export function CountdownTimer({ endTime }: CountdownTimerProps) {
     if (isUrgent) {
       pulse.value = withRepeat(
         withSequence(
-          withTiming(1.05, { duration: 500, easing: Easing.inOut(Easing.ease) }),
-          withTiming(1, { duration: 500, easing: Easing.inOut(Easing.ease) })
+          withTiming(1.05, {
+            duration: 500,
+            easing: Easing.inOut(Easing.ease),
+          }),
+          withTiming(1, { duration: 500, easing: Easing.inOut(Easing.ease) }),
         ),
         -1,
-        true
+        true,
       );
     } else {
       pulse.value = 1;
@@ -64,7 +71,9 @@ export function CountdownTimer({ endTime }: CountdownTimerProps) {
 
   if (!endTime) {
     return (
-      <View style={[styles.container, { backgroundColor: theme.backgroundDefault }]}>
+      <View
+        style={[styles.container, { backgroundColor: theme.backgroundDefault }]}
+      >
         <ThemedText style={[styles.noTimer, { color: theme.textSecondary }]}>
           Set deadline in settings
         </ThemedText>
@@ -101,8 +110,7 @@ const styles = StyleSheet.create({
   },
   time: {
     fontSize: 32,
-    fontWeight: "800",
-    fontFamily: Typography.display.fontFamily,
+    fontWeight: "700",
     letterSpacing: 2,
   },
   label: {

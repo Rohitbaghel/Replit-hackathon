@@ -1,13 +1,13 @@
-import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useCards } from '../hooks/useCardContext';
-import { View, ActivityIndicator } from 'react-native';
+import React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useCards } from "../hooks/useCardContext";
+import { View, ActivityIndicator } from "react-native";
 
 // Screens
-import CardListScreen from '../screens/CardListScreen';
-import CardDetailsScreen from '../screens/CardDetailsScreen';
-import AddCardScreen from '../screens/AddCardScreen';
-import OnboardingScreen from '../screens/OnboardingScreen';
+import CardListScreen from "../screens/CardListScreen";
+import CardDetailsScreen from "../screens/CardDetailsScreen";
+import AddCardScreen from "../screens/AddCardScreen";
+import OnboardingScreen from "../screens/OnboardingScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,7 +16,7 @@ export default function AppNavigator() {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" color="#007AFF" />
       </View>
     );

@@ -77,19 +77,12 @@ export function TaskCard({ task, onToggle, onDelete }: TaskCardProps) {
         ) : null}
       </View>
       <ThemedText
-        style={[
-          styles.title,
-          task.completed && styles.completedTitle,
-        ]}
+        style={[styles.title, task.completed && styles.completedTitle]}
         numberOfLines={2}
       >
         {task.title}
       </ThemedText>
-      <Pressable
-        onPress={onDelete}
-        hitSlop={8}
-        style={styles.deleteButton}
-      >
+      <Pressable onPress={onDelete} hitSlop={8} style={styles.deleteButton}>
         <Feather name="x" size={18} color={theme.textSecondary} />
       </Pressable>
     </AnimatedPressable>

@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, TextInput, Pressable, Alert, Platform } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  Pressable,
+  Alert,
+  Platform,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -11,7 +18,7 @@ import { KeyboardAwareScrollViewCompat } from "@/components/KeyboardAwareScrollV
 import { ThemedText } from "@/components/ThemedText";
 import { Button } from "@/components/Button";
 import { useTheme } from "@/hooks/useTheme";
-import { Spacing, BorderRadius, Typography } from "@/constants/theme";
+import { Spacing, BorderRadius } from "@/constants/theme";
 import { storage, SettingsData } from "@/lib/storage";
 
 export default function SettingsScreen() {
@@ -91,7 +98,7 @@ export default function SettingsScreen() {
             navigation.goBack();
           },
         },
-      ]
+      ],
     );
   };
 
@@ -108,7 +115,9 @@ export default function SettingsScreen() {
 
   if (!loaded) {
     return (
-      <View style={[styles.container, { backgroundColor: theme.backgroundRoot }]} />
+      <View
+        style={[styles.container, { backgroundColor: theme.backgroundRoot }]}
+      />
     );
   }
 
@@ -124,7 +133,10 @@ export default function SettingsScreen() {
       ]}
     >
       <View style={styles.section}>
-        <ThemedText type="label" style={{ color: theme.textSecondary, marginBottom: Spacing.sm }}>
+        <ThemedText
+          type="label"
+          style={{ color: theme.textSecondary, marginBottom: Spacing.sm }}
+        >
           Team Name
         </ThemedText>
         <TextInput
@@ -138,14 +150,16 @@ export default function SettingsScreen() {
               backgroundColor: theme.backgroundDefault,
               borderColor: theme.border,
               color: theme.text,
-              fontFamily: Typography.body.fontFamily,
             },
           ]}
         />
       </View>
 
       <View style={styles.section}>
-        <ThemedText type="label" style={{ color: theme.textSecondary, marginBottom: Spacing.sm }}>
+        <ThemedText
+          type="label"
+          style={{ color: theme.textSecondary, marginBottom: Spacing.sm }}
+        >
           Hackathon Deadline
         </ThemedText>
         <Pressable
@@ -172,7 +186,9 @@ export default function SettingsScreen() {
         </Pressable>
       </View>
 
-      {(showDatePicker || Platform.OS === "ios") && settings.hackathonEndTime !== null || showDatePicker ? (
+      {((showDatePicker || Platform.OS === "ios") &&
+        settings.hackathonEndTime !== null) ||
+      showDatePicker ? (
         <View style={styles.pickerContainer}>
           <DateTimePicker
             value={tempDate}
@@ -200,15 +216,15 @@ export default function SettingsScreen() {
       </View>
 
       <View style={styles.dangerZone}>
-        <ThemedText type="label" style={{ color: theme.accent, marginBottom: Spacing.md }}>
+        <ThemedText
+          type="label"
+          style={{ color: theme.accent, marginBottom: Spacing.md }}
+        >
           Danger Zone
         </ThemedText>
         <Pressable
           onPress={handleReset}
-          style={[
-            styles.resetButton,
-            { borderColor: theme.accent },
-          ]}
+          style={[styles.resetButton, { borderColor: theme.accent }]}
         >
           <Feather name="trash-2" size={18} color={theme.accent} />
           <ThemedText style={[styles.resetText, { color: theme.accent }]}>

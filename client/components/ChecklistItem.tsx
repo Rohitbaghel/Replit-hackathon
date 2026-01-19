@@ -13,7 +13,11 @@ interface ChecklistItemProps {
   onToggle: () => void;
 }
 
-export function ChecklistItem({ label, checked, onToggle }: ChecklistItemProps) {
+export function ChecklistItem({
+  label,
+  checked,
+  onToggle,
+}: ChecklistItemProps) {
   const { theme } = useTheme();
 
   const handlePress = () => {

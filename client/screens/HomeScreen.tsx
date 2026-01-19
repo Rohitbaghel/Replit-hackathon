@@ -1,28 +1,69 @@
-import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, Image, TouchableOpacity, Dimensions } from 'react-native';
-import { Feather, Ionicons } from '@expo/vector-icons';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
+import { Feather, Ionicons } from "@expo/vector-icons";
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
 const CARDS = [
-  { id: '1', bank: 'Raiffeisen Bank', number: '.... 2687', color: '#76e076', textColor: '#1a1a1a' },
-  { id: '2', bank: 'Bank of America', number: '.... 1897', color: '#f5d94d', textColor: '#1a1a1a' },
-  { id: '3', bank: 'UBS Bank', number: '.... 1734', color: '#76a5f5', textColor: '#ffffff' },
-  { id: '4', bank: 'Citybank', number: '.... 8996', color: '#e05244', balance: '$3,687', expiry: '12/24', holder: 'John Smith', textColor: '#ffffff', isMain: true },
+  {
+    id: "1",
+    bank: "Raiffeisen Bank",
+    number: ".... 2687",
+    color: "#76e076",
+    textColor: "#1a1a1a",
+  },
+  {
+    id: "2",
+    bank: "Bank of America",
+    number: ".... 1897",
+    color: "#f5d94d",
+    textColor: "#1a1a1a",
+  },
+  {
+    id: "3",
+    bank: "UBS Bank",
+    number: ".... 1734",
+    color: "#76a5f5",
+    textColor: "#ffffff",
+  },
+  {
+    id: "4",
+    bank: "Citybank",
+    number: ".... 8996",
+    color: "#e05244",
+    balance: "$3,687",
+    expiry: "12/24",
+    holder: "John Smith",
+    textColor: "#ffffff",
+    isMain: true,
+  },
 ];
 
 const SHARED_USERS = [
-  { id: '1', name: 'Kristin Watson', image: 'https://i.pravatar.cc/150?u=kristin' },
-  { id: '2', name: 'Julie Lorens', image: 'https://i.pravatar.cc/150?u=julie' },
+  {
+    id: "1",
+    name: "Kristin Watson",
+    image: "https://i.pravatar.cc/150?u=kristin",
+  },
+  { id: "2", name: "Julie Lorens", image: "https://i.pravatar.cc/150?u=julie" },
 ];
 
 export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Image 
-          source={{ uri: 'https://i.pravatar.cc/150?u=me' }} 
-          style={styles.profileImage} 
+        <Image
+          source={{ uri: "https://i.pravatar.cc/150?u=me" }}
+          style={styles.profileImage}
         />
         <View style={styles.headerIcons}>
           <TouchableOpacity style={styles.iconButton}>
@@ -44,41 +85,91 @@ export default function HomeScreen() {
 
         <View style={styles.cardsContainer}>
           {CARDS.map((card, index) => (
-            <View 
-              key={card.id} 
+            <View
+              key={card.id}
               style={[
-                styles.card, 
-                { 
+                styles.card,
+                {
                   backgroundColor: card.color,
                   marginTop: index === 0 ? 0 : -140,
                   zIndex: index,
                 },
-                card.isMain && styles.mainCard
+                card.isMain && styles.mainCard,
               ]}
             >
               <View style={styles.cardHeader}>
-                <Text style={[styles.bankName, { color: card.textColor }]}>{card.bank}</Text>
-                <Text style={[styles.cardNumber, { color: card.textColor, opacity: 0.7 }]}>{card.number}</Text>
+                <Text style={[styles.bankName, { color: card.textColor }]}>
+                  {card.bank}
+                </Text>
+                <Text
+                  style={[
+                    styles.cardNumber,
+                    { color: card.textColor, opacity: 0.7 },
+                  ]}
+                >
+                  {card.number}
+                </Text>
               </View>
 
               {card.isMain && (
                 <View style={styles.cardDetails}>
                   <View style={styles.balanceRow}>
-                    <Text style={[styles.balanceText, { color: card.textColor }]}>{card.balance}</Text>
-                    <Ionicons name="wifi-outline" size={24} color={card.textColor} style={styles.wifiIcon} />
+                    <Text
+                      style={[styles.balanceText, { color: card.textColor }]}
+                    >
+                      {card.balance}
+                    </Text>
+                    <Ionicons
+                      name="wifi-outline"
+                      size={24}
+                      color={card.textColor}
+                      style={styles.wifiIcon}
+                    />
                   </View>
                   <View style={styles.cardFooter}>
                     <View>
-                      <Text style={[styles.label, { color: card.textColor, opacity: 0.6 }]}>EXPIRATION</Text>
-                      <Text style={[styles.info, { color: card.textColor }]}>{card.expiry}</Text>
+                      <Text
+                        style={[
+                          styles.label,
+                          { color: card.textColor, opacity: 0.6 },
+                        ]}
+                      >
+                        EXPIRATION
+                      </Text>
+                      <Text style={[styles.info, { color: card.textColor }]}>
+                        {card.expiry}
+                      </Text>
                     </View>
                     <View style={styles.holderInfo}>
-                      <Text style={[styles.label, { color: card.textColor, opacity: 0.6 }]}>CARD HOLDER</Text>
-                      <Text style={[styles.info, { color: card.textColor }]}>{card.holder}</Text>
+                      <Text
+                        style={[
+                          styles.label,
+                          { color: card.textColor, opacity: 0.6 },
+                        ]}
+                      >
+                        CARD HOLDER
+                      </Text>
+                      <Text style={[styles.info, { color: card.textColor }]}>
+                        {card.holder}
+                      </Text>
                     </View>
                     <View style={styles.mastercardLogo}>
-                      <View style={[styles.mcCircle, { backgroundColor: '#eb001b', opacity: 0.8 }]} />
-                      <View style={[styles.mcCircle, { backgroundColor: '#f79e1b', marginLeft: -10, opacity: 0.8 }]} />
+                      <View
+                        style={[
+                          styles.mcCircle,
+                          { backgroundColor: "#eb001b", opacity: 0.8 },
+                        ]}
+                      />
+                      <View
+                        style={[
+                          styles.mcCircle,
+                          {
+                            backgroundColor: "#f79e1b",
+                            marginLeft: -10,
+                            opacity: 0.8,
+                          },
+                        ]}
+                      />
                     </View>
                   </View>
                 </View>
@@ -93,10 +184,12 @@ export default function HomeScreen() {
             <TouchableOpacity style={styles.addSharedButton}>
               <Ionicons name="person-add-outline" size={20} color="#ffffff" />
             </TouchableOpacity>
-            {SHARED_USERS.map(user => (
+            {SHARED_USERS.map((user) => (
               <View key={user.id} style={styles.sharedUserCard}>
                 <Image source={{ uri: user.image }} style={styles.userImage} />
-                <Text style={styles.userName} numberOfLines={2}>{user.name}</Text>
+                <Text style={styles.userName} numberOfLines={2}>
+                  {user.name}
+                </Text>
               </View>
             ))}
           </View>
@@ -109,12 +202,12 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0a101f',
+    backgroundColor: "#0a101f",
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 24,
     paddingTop: 10,
     marginBottom: 20,
@@ -124,10 +217,10 @@ const styles = StyleSheet.create({
     height: 44,
     borderRadius: 22,
     borderWidth: 2,
-    borderColor: '#1e2638',
+    borderColor: "#1e2638",
   },
   headerIcons: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   iconButton: {
     marginLeft: 20,
@@ -136,24 +229,24 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   titleSection: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 24,
     marginBottom: 30,
   },
   title: {
     fontSize: 36,
-    fontWeight: 'bold',
-    color: '#ffffff',
+    fontWeight: "600",
+    color: "#ffffff",
   },
   addButton: {
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#1e2638',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#1e2638",
+    justifyContent: "center",
+    alignItems: "center",
   },
   cardsContainer: {
     paddingHorizontal: 24,
@@ -163,7 +256,7 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 32,
     padding: 24,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.3,
     shadowRadius: 20,
@@ -173,13 +266,13 @@ const styles = StyleSheet.create({
     height: 240,
   },
   cardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   bankName: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   cardNumber: {
     fontSize: 14,
@@ -189,22 +282,22 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   balanceRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   balanceText: {
     fontSize: 42,
-    fontWeight: 'bold',
+    fontWeight: "700",
   },
   wifiIcon: {
-    transform: [{ rotate: '90deg' }],
+    transform: [{ rotate: "90deg" }],
     opacity: 0.8,
   },
   cardFooter: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 30,
-    alignItems: 'center',
+    alignItems: "center",
   },
   holderInfo: {
     marginLeft: 30,
@@ -212,16 +305,16 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 10,
-    fontWeight: '700',
+    fontWeight: "500",
     letterSpacing: 0.5,
     marginBottom: 4,
   },
   info: {
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   mastercardLogo: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   mcCircle: {
     width: 32,
@@ -234,30 +327,30 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#ffffff',
+    fontWeight: "600",
+    color: "#ffffff",
     marginBottom: 20,
   },
   sharedUsersRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   addSharedButton: {
     width: 80,
     height: 80,
     borderRadius: 24,
-    backgroundColor: '#1e2638',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#1e2638",
+    justifyContent: "center",
+    alignItems: "center",
     marginRight: 12,
   },
   sharedUserCard: {
     width: 120,
     height: 80,
     borderRadius: 24,
-    backgroundColor: '#1e2638',
-    flexDirection: 'row',
-    alignItems: 'center',
+    backgroundColor: "#1e2638",
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 12,
     marginRight: 12,
   },
@@ -268,9 +361,9 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   userName: {
-    color: '#ffffff',
+    color: "#ffffff",
     fontSize: 13,
-    fontWeight: '600',
+    fontWeight: "600",
     flex: 1,
   },
 });

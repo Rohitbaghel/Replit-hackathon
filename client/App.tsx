@@ -6,14 +6,6 @@ import { KeyboardProvider } from "react-native-keyboard-controller";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
-import {
-  useFonts,
-  LexendDeca_400Regular,
-  LexendDeca_500Medium,
-  LexendDeca_600SemiBold,
-  LexendDeca_700Bold,
-  LexendDeca_800ExtraBold,
-} from "@expo-google-fonts/lexend-deca";
 
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/lib/query-client";
@@ -24,23 +16,9 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  const [fontsLoaded, fontError] = useFonts({
-    LexendDeca_400Regular,
-    LexendDeca_500Medium,
-    LexendDeca_600SemiBold,
-    LexendDeca_700Bold,
-    LexendDeca_800ExtraBold,
-  });
-
   useEffect(() => {
-    if (fontsLoaded || fontError) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, fontError]);
-
-  if (!fontsLoaded && !fontError) {
-    return null;
-  }
+    SplashScreen.hideAsync();
+  }, []);
 
   return (
     <ErrorBoundary>

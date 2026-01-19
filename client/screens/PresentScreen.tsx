@@ -58,7 +58,7 @@ export default function PresentScreen() {
 
   const toggleChecklistItem = (id: string) => {
     const newChecklist = pitch.demoChecklist.map((item) =>
-      item.id === id ? { ...item, checked: !item.checked } : item
+      item.id === id ? { ...item, checked: !item.checked } : item,
     );
     const newPitch = { ...pitch, demoChecklist: newChecklist };
     setPitch(newPitch);
@@ -72,7 +72,9 @@ export default function PresentScreen() {
 
   if (!loaded) {
     return (
-      <View style={[styles.container, { backgroundColor: theme.backgroundRoot }]} />
+      <View
+        style={[styles.container, { backgroundColor: theme.backgroundRoot }]}
+      />
     );
   }
 
@@ -118,7 +120,10 @@ export default function PresentScreen() {
       />
 
       <View style={styles.section}>
-        <ThemedText type="label" style={{ color: theme.textSecondary, marginBottom: Spacing.md }}>
+        <ThemedText
+          type="label"
+          style={{ color: theme.textSecondary, marginBottom: Spacing.md }}
+        >
           Demo Checklist
         </ThemedText>
         {pitch.demoChecklist.map((item) => (

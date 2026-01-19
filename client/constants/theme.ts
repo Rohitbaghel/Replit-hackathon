@@ -63,79 +63,76 @@ export const BorderRadius = {
 export const Typography = {
   display: {
     fontSize: 48,
-    lineHeight: 56,
-    fontWeight: "800" as const,
-    fontFamily: "LexendDeca_800ExtraBold",
+    lineHeight: 60,
+    fontWeight: "600" as const,
   },
   h1: {
     fontSize: 28,
-    lineHeight: 36,
-    fontWeight: "700" as const,
-    fontFamily: "LexendDeca_700Bold",
+    lineHeight: 38,
+    fontWeight: "600" as const,
   },
   h2: {
     fontSize: 24,
-    lineHeight: 32,
-    fontWeight: "700" as const,
-    fontFamily: "LexendDeca_700Bold",
+    lineHeight: 34,
+    fontWeight: "600" as const,
   },
   h3: {
     fontSize: 20,
     lineHeight: 28,
     fontWeight: "600" as const,
-    fontFamily: "LexendDeca_600SemiBold",
   },
   h4: {
     fontSize: 18,
-    lineHeight: 26,
+    lineHeight: 28,
     fontWeight: "600" as const,
-    fontFamily: "LexendDeca_600SemiBold",
   },
   body: {
     fontSize: 16,
-    lineHeight: 24,
+    lineHeight: 26,
     fontWeight: "400" as const,
-    fontFamily: "LexendDeca_400Regular",
   },
   small: {
     fontSize: 14,
-    lineHeight: 20,
+    lineHeight: 22,
     fontWeight: "400" as const,
-    fontFamily: "LexendDeca_400Regular",
   },
   label: {
     fontSize: 12,
-    lineHeight: 16,
+    lineHeight: 18,
     fontWeight: "500" as const,
-    fontFamily: "LexendDeca_500Medium",
     textTransform: "uppercase" as const,
     letterSpacing: 1,
   },
   link: {
     fontSize: 16,
-    lineHeight: 24,
+    lineHeight: 26,
     fontWeight: "400" as const,
-    fontFamily: "LexendDeca_400Regular",
+  },
+  subtitle: {
+    fontSize: 14,
+    lineHeight: 22,
+    fontWeight: "500" as const,
+  },
+  cta: {
+    fontSize: 18,
+    lineHeight: 26,
+    fontWeight: "700" as const,
+  },
+  amount: {
+    fontSize: 22,
+    lineHeight: 30,
+    fontWeight: "700" as const,
   },
 };
 
 export const Fonts = Platform.select({
   ios: {
-    sans: "LexendDeca_400Regular",
-    serif: "ui-serif",
-    rounded: "ui-rounded",
     mono: "ui-monospace",
   },
   default: {
-    sans: "LexendDeca_400Regular",
-    serif: "serif",
-    rounded: "LexendDeca_400Regular",
     mono: "monospace",
   },
   web: {
-    sans: "LexendDeca_400Regular, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-    serif: "Georgia, 'Times New Roman', serif",
-    rounded: "LexendDeca_400Regular, 'SF Pro Rounded', sans-serif",
     mono: "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
   },
 });
