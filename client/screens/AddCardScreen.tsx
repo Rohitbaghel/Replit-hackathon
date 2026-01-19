@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView, Image, Animated } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { BANKS, PREDEFINED_CARDS } from '../constants/mockData';
@@ -37,7 +37,7 @@ export default function AddCardScreen() {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Feather name="x" size={24} color="black" />
+          <Feather name="x" size={24} color="#ffffff" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Add New Card</Text>
         <TouchableOpacity 
@@ -58,6 +58,7 @@ export default function AddCardScreen() {
               style={[styles.bankItem, selectedBank === bank.id && styles.selectedItem]}
               onPress={() => {
                 setSelectedBank(bank.id);
+                setSelectedType(null);
                 setSelectedCard(null);
               }}
             >
@@ -67,21 +68,28 @@ export default function AddCardScreen() {
           ))}
         </View>
 
-        <Text style={styles.sectionTitle}>Card Type</Text>
-        <View style={styles.typeRow}>
-          {['Credit', 'Debit'].map((type: any) => (
-            <TouchableOpacity 
-              key={type}
-              style={[styles.typeButton, selectedType === type && styles.selectedType]}
-              onPress={() => setSelectedType(type)}
-            >
-              <Text style={[styles.typeText, selectedType === type && styles.selectedTypeText]}>{type}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-
         {selectedBank && (
-          <>
+          <Animated.View style={styles.section}>
+            <Text style={styles.sectionTitle}>Card Type</Text>
+            <View style={styles.typeRow}>
+              {['Credit', 'Debit'].map((type: any) => (
+                <TouchableOpacity 
+                  key={type}
+                  style={[styles.typeButton, selectedType === type && styles.selectedType]}
+                  onPress={() => {
+                    setSelectedType(type);
+                    setSelectedCard(null);
+                  }}
+                >
+                  <Text style={[styles.typeText, selectedType === type && styles.selectedTypeText]}>{type}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </Animated.View>
+        )}
+
+        {selectedType && (
+          <Animated.View style={styles.section}>
             <Text style={styles.sectionTitle}>Select Card Design</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.cardList}>
               {filteredCards.map(card => (
@@ -95,7 +103,7 @@ export default function AddCardScreen() {
                 </TouchableOpacity>
               ))}
             </ScrollView>
-          </>
+          </Animated.View>
         )}
       </ScrollView>
     </SafeAreaView>
@@ -105,7 +113,7 @@ export default function AddCardScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#0a101f',
   },
   header: {
     flexDirection: 'row',
@@ -113,11 +121,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: '#1e2638',
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#ffffff',
   },
   saveText: {
     color: '#007AFF',
@@ -127,24 +136,28 @@ const styles = StyleSheet.create({
   content: {
     padding: 20,
   },
+  section: {
+    marginTop: 10,
+  },
   sectionTitle: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 15,
     marginTop: 10,
-    color: '#333',
+    color: '#ffffff',
+    opacity: 0.8,
   },
   bankGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   bankItem: {
     width: '48%',
     padding: 15,
-    borderRadius: 15,
-    backgroundColor: '#f8f9fa',
+    borderRadius: 20,
+    backgroundColor: '#1e2638',
     alignItems: 'center',
     marginBottom: 15,
     borderWidth: 2,
@@ -152,7 +165,7 @@ const styles = StyleSheet.create({
   },
   selectedItem: {
     borderColor: '#007AFF',
-    backgroundColor: '#eef6ff',
+    backgroundColor: '#252f4a',
   },
   bankLogo: {
     width: 40,
@@ -162,6 +175,7 @@ const styles = StyleSheet.create({
   },
   bankName: {
     fontWeight: '600',
+    color: '#ffffff',
   },
   typeRow: {
     flexDirection: 'row',
@@ -170,12 +184,12 @@ const styles = StyleSheet.create({
   typeButton: {
     flex: 1,
     paddingVertical: 12,
-    borderRadius: 10,
-    backgroundColor: '#f8f9fa',
+    borderRadius: 15,
+    backgroundColor: '#1e2638',
     alignItems: 'center',
     marginRight: 10,
     borderWidth: 1,
-    borderColor: '#eee',
+    borderColor: '#1e2638',
   },
   selectedType: {
     backgroundColor: '#007AFF',
@@ -183,35 +197,39 @@ const styles = StyleSheet.create({
   },
   typeText: {
     fontWeight: '600',
-    color: '#666',
+    color: '#ffffff',
+    opacity: 0.6,
   },
   selectedTypeText: {
     color: 'white',
+    opacity: 1,
   },
   cardList: {
     marginBottom: 30,
   },
   cardOption: {
-    width: 200,
+    width: 220,
     marginRight: 15,
-    borderRadius: 15,
+    borderRadius: 20,
     padding: 10,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#1e2638',
     borderWidth: 2,
     borderColor: 'transparent',
   },
   selectedCardOption: {
     borderColor: '#007AFF',
+    backgroundColor: '#252f4a',
   },
   cardOptionImage: {
     width: '100%',
-    height: 120,
-    borderRadius: 10,
+    height: 130,
+    borderRadius: 15,
     marginBottom: 10,
   },
   cardOptionName: {
     fontSize: 12,
     fontWeight: '600',
     textAlign: 'center',
+    color: '#ffffff',
   },
 });
