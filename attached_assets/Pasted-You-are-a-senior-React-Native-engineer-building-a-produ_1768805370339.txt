@@ -1,0 +1,171 @@
+You are a senior React Native engineer building a production-ready mobile app using React Native + React Navigation.
+
+⚠️ IMPORTANT:
+The app MUST start with an onboarding flow.
+Home screen should only appear after onboarding is completed.
+
+App Flow (Mandatory Order)
+
+Onboarding Screens (First Launch Only)
+
+Home Screen (Card List)
+
+Card Details Screen
+
+Add Card Screen
+
+1️⃣ Onboarding Flow
+
+Use 3 onboarding screens (can be swipe-based or button-based).
+
+Each screen should have:
+
+Title
+
+Subtitle
+
+Illustration placeholder
+
+Last onboarding screen must have a “Get Started” button.
+
+On clicking Get Started:
+
+Save onboardingCompleted = true in local state (or AsyncStorage mock).
+
+Navigate to Home Screen.
+
+⚠️ On app reload:
+
+If onboardingCompleted === true → go directly to Home Screen
+
+Else → show Onboarding
+
+2️⃣ Home Screen (Cards Screen)
+
+This is the main screen after onboarding.
+
+Display a list of user cards in a card-style layout.
+
+Each card must be:
+
+Clickable
+
+Navigate to Card Details Screen
+
+Show on each card:
+
+Card image
+
+Bank name
+
+Card type (Credit / Debit)
+
+Add a floating "+" button on this screen.
+
+On clicking "+", navigate to Add Card Screen.
+
+3️⃣ Card Details Screen
+
+Show:
+
+Card image
+
+Bank name
+
+Card type
+
+No sensitive card data.
+
+4️⃣ Add Card Screen (No Sensitive Data)
+
+⚠️ Do NOT collect or store:
+
+Card number
+
+CVV
+
+Expiry date
+
+User selects only:
+
+Bank
+
+Example: HDFC, ICICI, Axis, SBI
+
+Card type
+
+Credit / Debit
+
+Card from predefined list
+
+Show card image (e.g., HDFC Infinia sample card)
+
+On submit:
+
+Add selected card to Home Screen list (local state only)
+
+5️⃣ Navigation Structure (IMPORTANT)
+
+Use React Navigation
+
+Root Navigator:
+
+Conditional navigation based on onboardingCompleted
+
+Navigators:
+
+OnboardingStack
+
+MainStack
+
+6️⃣ Data Handling
+
+Use mock/static data for:
+
+Bank list
+
+Card list
+
+Card images
+
+Use Context API or useState for card state.
+
+7️⃣ UI Expectations
+
+Modern, clean UI
+
+Rounded cards with shadows
+
+Proper spacing and typography
+
+Touchable feedback on press
+
+8️⃣ Code Expectations
+
+Functional components only
+
+Hooks-based state
+
+Modular folder structure
+
+Clear comments
+
+Complete runnable code
+
+Output complete React Native code, including:
+
+Navigation setup
+
+Onboarding screens
+
+Home screen with cards
+
+Card details screen
+
+Add card screen
+
+Mock data
+
+Basic styling
+
+Assume this is an Expo-based project.
