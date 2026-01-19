@@ -1,0 +1,239 @@
+{
+  "banks": [
+    {
+      "bankId": "hdfc",
+      "bankName": "HDFC Bank",
+      "cards": [
+        {
+          "id": "hdfc_infinia",
+          "cardName": "Infinia",
+          "cardType": "Credit",
+          "tier": "Super Premium",
+          "image": "assets/cards/hdfc_infinia.png"
+        },
+        {
+          "id": "hdfc_diners_black",
+          "cardName": "Diners Club Black",
+          "cardType": "Credit",
+          "tier": "Super Premium",
+          "image": "assets/cards/hdfc_diners_black.png"
+        },
+        {
+          "id": "hdfc_regalia_gold",
+          "cardName": "Regalia Gold",
+          "cardType": "Credit",
+          "tier": "Premium",
+          "image": "assets/cards/hdfc_regalia_gold.png"
+        },
+        {
+          "id": "hdfc_millennia",
+          "cardName": "Millennia",
+          "cardType": "Credit",
+          "tier": "Mid",
+          "image": "assets/cards/hdfc_millennia.png"
+        },
+        {
+          "id": "hdfc_moneyback_plus",
+          "cardName": "MoneyBack+",
+          "cardType": "Credit",
+          "tier": "Entry",
+          "image": "assets/cards/hdfc_moneyback_plus.png"
+        }
+      ]
+    },
+    {
+      "bankId": "axis",
+      "bankName": "Axis Bank",
+      "cards": [
+        {
+          "id": "axis_magnus",
+          "cardName": "Magnus",
+          "cardType": "Credit",
+          "tier": "Super Premium",
+          "image": "assets/cards/axis_magnus.png"
+        },
+        {
+          "id": "axis_atlas",
+          "cardName": "Atlas",
+          "cardType": "Credit",
+          "tier": "Premium",
+          "image": "assets/cards/axis_atlas.png"
+        },
+        {
+          "id": "axis_select",
+          "cardName": "Select",
+          "cardType": "Credit",
+          "tier": "Mid",
+          "image": "assets/cards/axis_select.png"
+        }
+      ]
+    },
+    {
+      "bankId": "sbi",
+      "bankName": "State Bank of India",
+      "cards": [
+        {
+          "id": "sbi_elite",
+          "cardName": "Elite",
+          "cardType": "Credit",
+          "tier": "Premium",
+          "image": "assets/cards/sbi_elite.png"
+        },
+        {
+          "id": "sbi_prime",
+          "cardName": "Prime",
+          "cardType": "Credit",
+          "tier": "Mid",
+          "image": "assets/cards/sbi_prime.png"
+        },
+        {
+          "id": "sbi_simplyclick",
+          "cardName": "SimplyCLICK",
+          "cardType": "Credit",
+          "tier": "Entry",
+          "image": "assets/cards/sbi_simplyclick.png"
+        }
+      ]
+    },
+    {
+      "bankId": "bob",
+      "bankName": "Bank of Baroda",
+      "cards": [
+        {
+          "id": "bob_premier",
+          "cardName": "Premier",
+          "cardType": "Credit",
+          "tier": "Premium",
+          "image": "assets/cards/bob_premier.png"
+        },
+        {
+          "id": "bob_easy",
+          "cardName": "Easy",
+          "cardType": "Credit",
+          "tier": "Entry",
+          "image": "assets/cards/bob_easy.png"
+        }
+      ]
+    },
+    {
+      "bankId": "icici",
+      "bankName": "ICICI Bank",
+      "cards": [
+        {
+          "id": "icici_sapphiro",
+          "cardName": "Sapphiro",
+          "cardType": "Credit",
+          "tier": "Premium",
+          "image": "assets/cards/icici_sapphiro.png"
+        },
+        {
+          "id": "icici_amazon_pay",
+          "cardName": "Amazon Pay",
+          "cardType": "Credit",
+          "tier": "Cashback",
+          "image": "assets/cards/icici_amazon_pay.png"
+        }
+      ]
+    },
+    {
+      "bankId": "kotak",
+      "bankName": "Kotak Mahindra Bank",
+      "cards": [
+        {
+          "id": "kotak_white",
+          "cardName": "White",
+          "cardType": "Credit",
+          "tier": "Super Premium",
+          "image": "assets/cards/kotak_white.png"
+        },
+        {
+          "id": "kotak_zen",
+          "cardName": "Zen Signature",
+          "cardType": "Credit",
+          "tier": "Premium",
+          "image": "assets/cards/kotak_zen.png"
+        }
+      ]
+    },
+    {
+      "bankId": "indusind",
+      "bankName": "IndusInd Bank",
+      "cards": [
+        {
+          "id": "indusind_legend",
+          "cardName": "Legend",
+          "cardType": "Credit",
+          "tier": "Premium",
+          "image": "assets/cards/indusind_legend.png"
+        },
+        {
+          "id": "indusind_pioneer",
+          "cardName": "Pioneer Heritage",
+          "cardType": "Credit",
+          "tier": "Super Premium",
+          "image": "assets/cards/indusind_pioneer.png"
+        }
+      ]
+    },
+    {
+      "bankId": "yes",
+      "bankName": "Yes Bank",
+      "cards": [
+        {
+          "id": "yes_reserv",
+          "cardName": "Reserv",
+          "cardType": "Credit",
+          "tier": "Super Premium",
+          "image": "assets/cards/yes_reserv.png"
+        },
+        {
+          "id": "yes_select",
+          "cardName": "Select",
+          "cardType": "Credit",
+          "tier": "Mid",
+          "image": "assets/cards/yes_select.png"
+        }
+      ]
+    },
+    {
+      "bankId": "idfc",
+      "bankName": "IDFC First Bank",
+      "cards": [
+        {
+          "id": "idfc_wealth",
+          "cardName": "Wealth",
+          "cardType": "Credit",
+          "tier": "Premium",
+          "image": "assets/cards/idfc_wealth.png"
+        },
+        {
+          "id": "idfc_select",
+          "cardName": "Select",
+          "cardType": "Credit",
+          "tier": "Mid",
+          "image": "assets/cards/idfc_select.png"
+        }
+      ]
+    },
+    {
+      "bankId": "hsbc",
+      "bankName": "HSBC India",
+      "cards": [
+        {
+          "id": "hsbc_platinum",
+          "cardName": "Visa Platinum",
+          "cardType": "Credit",
+          "tier": "Mid",
+          "image": "assets/cards/hsbc_platinum.png"
+        },
+        {
+          "id": "hsbc_premier",
+          "cardName": "Premier",
+          "cardType": "Credit",
+          "tier": "Premium",
+          "image": "assets/cards/hsbc_premier.png"
+        }
+      ]
+    }
+  ]
+}
