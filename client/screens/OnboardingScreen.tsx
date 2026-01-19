@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import HomeScreen from './HomeScreen';
 
 const { width, height } = Dimensions.get('window');
 
@@ -35,18 +36,22 @@ const ONBOARDING_DATA = [
 
 export default function OnboardingScreen() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showHome, setShowHome] = useState(false);
+
+  if (showHome) {
+    return <HomeScreen />;
+  }
 
   const handleNext = () => {
     if (currentIndex < ONBOARDING_DATA.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
-      // Handle completion (e.g., navigate to login)
-      console.log('Onboarding completed');
+      setShowHome(true);
     }
   };
 
   const handleSkip = () => {
-    setCurrentIndex(ONBOARDING_DATA.length - 1);
+    setShowHome(true);
   };
 
   const currentItem = ONBOARDING_DATA[currentIndex];
