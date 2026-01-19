@@ -1,5 +1,9 @@
 import { registerRootComponent } from "expo";
+import React from 'react';
+import OnboardingScreen from './screens/OnboardingScreen';
 
-import App from "@/App";
+function App() {
+  return <OnboardingScreen />;
+}
 
 registerRootComponent(App);
