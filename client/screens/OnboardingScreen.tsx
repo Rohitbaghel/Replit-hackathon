@@ -51,6 +51,16 @@ export default function OnboardingScreen() {
           const index = Math.round(e.nativeEvent.contentOffset.x / width);
           setActiveIndex(index);
         }}
+        onScrollToIndexFailed={(info) => {
+          const wait = new Promise(resolve => setTimeout(resolve, 500));
+          wait.then(() => {
+            flatListRef.current?.scrollToIndex({ index: info.index, animated: true });
+          });
+        }}
+        getItemLayout={(data, index) => (
+          { length: width, offset: width * index, index }
+        )}
+        scrollEventThrottle={16}
         renderItem={({ item }) => (
           <View style={styles.page}>
             <Image source={{ uri: item.image }} style={styles.image} />
