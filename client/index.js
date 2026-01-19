@@ -1,9 +1,17 @@
 import { registerRootComponent } from "expo";
 import React from 'react';
-import OnboardingScreen from './screens/OnboardingScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { CardProvider } from './hooks/useCardContext';
+import AppNavigator from './navigation/AppNavigator';
 
 function App() {
-  return <OnboardingScreen />;
+  return (
+    <CardProvider>
+      <NavigationContainer>
+        <AppNavigator />
+      </NavigationContainer>
+    </CardProvider>
+  );
 }
 
 registerRootComponent(App);
