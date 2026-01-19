@@ -2,26 +2,26 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView, Image, Animated } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { BANKS, PREDEFINED_CARDS } from '../constants/mockData';
+import { BANK_DATA } from '../constants/mockData';
 import { useCards } from '../hooks/useCardContext';
 
 export default function AddCardScreen() {
   const navigation = useNavigation();
   const { addCard } = useCards();
   
-  const [selectedBank, setSelectedBank] = useState<string | null>(null);
+  const [selectedBankId, setSelectedBankId] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<'Credit' | 'Debit' | null>(null);
   const [selectedCard, setSelectedCard] = useState<any | null>(null);
 
+  const selectedBank = BANK_DATA.banks.find(b => b.bankId === selectedBankId);
   const filteredCards = selectedBank 
-    ? PREDEFINED_CARDS.filter(c => c.bankId === selectedBank)
+    ? selectedBank.cards.filter(c => c.cardType === selectedType)
     : [];
 
   const handleSave = () => {
     if (selectedBank && selectedType && selectedCard) {
-      const bank = BANKS.find(b => b.id === selectedBank);
       addCard({
-        bankName: bank?.name || '',
+        bankName: selectedBank.bankName,
         cardType: selectedType,
         cardImage: selectedCard.image,
         lastFour: Math.floor(1000 + Math.random() * 9000).toString(),
@@ -52,24 +52,26 @@ export default function AddCardScreen() {
       <ScrollView style={styles.content}>
         <Text style={styles.sectionTitle}>Select Bank</Text>
         <View style={styles.bankGrid}>
-          {BANKS.map(bank => (
+          {BANK_DATA.banks.map(bank => (
             <TouchableOpacity 
-              key={bank.id}
-              style={[styles.bankItem, selectedBank === bank.id && styles.selectedItem]}
+              key={bank.bankId}
+              style={[styles.bankItem, selectedBankId === bank.bankId && styles.selectedItem]}
               onPress={() => {
-                setSelectedBank(bank.id);
+                setSelectedBankId(bank.bankId);
                 setSelectedType(null);
                 setSelectedCard(null);
               }}
             >
-              <Image source={{ uri: bank.logo }} style={styles.bankLogo} />
-              <Text style={styles.bankName}>{bank.name}</Text>
+              <View style={styles.bankLogoPlaceholder}>
+                <Text style={styles.bankLogoText}>{bank.bankName.charAt(0)}</Text>
+              </View>
+              <Text style={styles.bankName} numberOfLines={1}>{bank.bankName}</Text>
             </TouchableOpacity>
           ))}
         </View>
 
-        {selectedBank && (
-          <Animated.View style={styles.section}>
+        {selectedBankId && (
+          <View style={styles.section}>
             <Text style={styles.sectionTitle}>Card Type</Text>
             <View style={styles.typeRow}>
               {['Credit', 'Debit'].map((type: any) => (
@@ -85,25 +87,30 @@ export default function AddCardScreen() {
                 </TouchableOpacity>
               ))}
             </View>
-          </Animated.View>
+          </View>
         )}
 
         {selectedType && (
-          <Animated.View style={styles.section}>
+          <View style={styles.section}>
             <Text style={styles.sectionTitle}>Select Card Design</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.cardList}>
-              {filteredCards.map(card => (
-                <TouchableOpacity 
-                  key={card.id}
-                  style={[styles.cardOption, selectedCard?.id === card.id && styles.selectedCardOption]}
-                  onPress={() => setSelectedCard(card)}
-                >
-                  <Image source={{ uri: card.image }} style={styles.cardOptionImage} />
-                  <Text style={styles.cardOptionName}>{card.name}</Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </Animated.View>
+            {filteredCards.length > 0 ? (
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.cardList}>
+                {filteredCards.map(card => (
+                  <TouchableOpacity 
+                    key={card.id}
+                    style={[styles.cardOption, selectedCard?.id === card.id && styles.selectedCardOption]}
+                    onPress={() => setSelectedCard(card)}
+                  >
+                    <Image source={{ uri: card.image }} style={styles.cardOptionImage} />
+                    <Text style={styles.cardOptionName}>{card.cardName}</Text>
+                    <Text style={styles.cardOptionTier}>{card.tier}</Text>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            ) : (
+              <Text style={styles.noCardsText}>No {selectedType} cards available for this bank yet.</Text>
+            )}
+          </View>
         )}
       </ScrollView>
     </SafeAreaView>
@@ -154,12 +161,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   bankItem: {
-    width: '48%',
-    padding: 15,
-    borderRadius: 20,
+    width: '31%',
+    padding: 12,
+    borderRadius: 16,
     backgroundColor: '#1e2638',
     alignItems: 'center',
-    marginBottom: 15,
+    marginBottom: 12,
     borderWidth: 2,
     borderColor: 'transparent',
   },
@@ -167,15 +174,25 @@ const styles = StyleSheet.create({
     borderColor: '#007AFF',
     backgroundColor: '#252f4a',
   },
-  bankLogo: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginBottom: 10,
+  bankLogoPlaceholder: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#2c3e50',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  bankLogoText: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   bankName: {
     fontWeight: '600',
     color: '#ffffff',
+    fontSize: 11,
+    textAlign: 'center',
   },
   typeRow: {
     flexDirection: 'row',
@@ -227,9 +244,23 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   cardOptionName: {
-    fontSize: 12,
-    fontWeight: '600',
+    fontSize: 14,
+    fontWeight: '700',
     textAlign: 'center',
     color: '#ffffff',
+  },
+  cardOptionTier: {
+    fontSize: 11,
+    textAlign: 'center',
+    color: '#ffffff',
+    opacity: 0.6,
+    marginTop: 2,
+  },
+  noCardsText: {
+    color: '#ffffff',
+    opacity: 0.5,
+    textAlign: 'center',
+    marginTop: 20,
+    fontStyle: 'italic',
   },
 });
