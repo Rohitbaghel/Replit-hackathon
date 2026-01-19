@@ -26,6 +26,7 @@ import Svg, {
   Stop,
 } from "react-native-svg";
 import { useCards } from "../hooks/useCardContext";
+import { PrimaryButton } from "../components/PrimaryButton";
 
 const abstract1 = require("../../assets/images/abstract1.png");
 const abstract2 = require("../../assets/images/abstract2.png");
@@ -211,22 +212,28 @@ export default function OnboardingScreen() {
 
   const handleNext = () => {
     const nextIndex = activeIndex + 1;
+
     if (nextIndex < ONBOARDING_PAGES.length) {
       flatListRef.current?.scrollToOffset({
         offset: width * nextIndex,
         animated: true,
       });
-      setActiveIndex(nextIndex);
+      // setActiveIndex(nextIndex);
     } else {
       completeOnboarding();
     }
   };
 
-  const updateIndex = (e: {
-    nativeEvent: { contentOffset: { x: number } };
-  }) => {
-    const index = Math.round(e.nativeEvent.contentOffset.x / width);
-    setActiveIndex(Math.max(0, Math.min(index, ONBOARDING_PAGES.length - 1)));
+  const lastIndexRef = useRef(0);
+
+  const updateIndex = (e: any) => {
+    const x = e.nativeEvent.contentOffset.x;
+    const index = Math.round(x / width);
+
+    if (index !== lastIndexRef.current) {
+      lastIndexRef.current = index;
+      setActiveIndex(index);
+    }
   };
 
   const sh = height * 0.5;
@@ -234,9 +241,27 @@ export default function OnboardingScreen() {
   const cx = width / 2;
   const cy = sh / 2;
 
+  // useEffect(() => {
+  //   slideIndex.value = withTiming(activeIndex, {
+  //     duration: TRANSITION_DURATION,
+  //     easing: Easing.bezier(0.22, 1, 0.36, 1),
+  //   });
+  // }, [activeIndex]);
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
+
+      {/* Skip – top-right, hidden on last screen */}
+      {activeIndex < ONBOARDING_PAGES.length - 1 && (
+        <TouchableOpacity
+          style={styles.skip}
+          onPress={completeOnboarding}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.skipText}>Skip →</Text>
+        </TouchableOpacity>
+      )}
 
       {/* Abstract images – upper half */}
       <View style={styles.shapesWrap} pointerEvents="none">
@@ -322,10 +347,8 @@ export default function OnboardingScreen() {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item.id}
-        extraData={activeIndex}
-        scrollEventThrottle={16}
-        onScroll={updateIndex}
         onMomentumScrollEnd={updateIndex}
+        onScroll={updateIndex}
         onScrollEndDrag={updateIndex}
         renderItem={({ item }) => (
           <View style={styles.page}>
@@ -337,15 +360,13 @@ export default function OnboardingScreen() {
 
       {/* CTA – pill, bottom */}
       <View style={styles.ctaWrap}>
-        <TouchableOpacity
-          style={styles.cta}
+        <PrimaryButton
           onPress={handleNext}
-          activeOpacity={0.85}
+          backgroundColor={CTA_BG}
+          textColor={CTA_TEXT}
         >
-          <Text style={styles.ctaText}>
-            {ONBOARDING_PAGES[activeIndex].cta}
-          </Text>
-        </TouchableOpacity>
+          {ONBOARDING_PAGES[activeIndex].cta}
+        </PrimaryButton>
       </View>
     </SafeAreaView>
   );
@@ -355,6 +376,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: BG_DARK,
+    overflow: "hidden",
+  },
+  skip: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    zIndex: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+  },
+  skipText: {
+    fontSize: 14,
+    color: "rgba(255,255,255,0.45)",
+    fontWeight: "500",
   },
   shapesWrap: {
     position: "absolute",
@@ -397,17 +432,5 @@ const styles = StyleSheet.create({
   ctaWrap: {
     paddingHorizontal: 24,
     paddingBottom: 24,
-  },
-  cta: {
-    backgroundColor: CTA_BG,
-    paddingVertical: 18,
-    borderRadius: 999,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  ctaText: {
-    color: CTA_TEXT,
-    fontSize: 17,
-    fontWeight: "600",
   },
 });
