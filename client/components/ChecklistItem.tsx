@@ -1,11 +1,11 @@
 import React from "react";
-import { StyleSheet, Pressable, View } from "react-native";
+import { Pressable, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 
 import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@/hooks/useTheme";
-import { Spacing, BorderRadius } from "@/constants/theme";
+import { Spacing } from "@/constants/theme";
 
 interface ChecklistItemProps {
   label: string;
@@ -28,33 +28,26 @@ export function ChecklistItem({
   return (
     <Pressable
       onPress={handlePress}
-      style={[
-        styles.container,
-        {
-          backgroundColor: theme.backgroundDefault,
-          borderColor: theme.border,
-        },
-      ]}
+      className="flex-row items-center p-3 rounded-xl border mb-2"
+      style={{
+        backgroundColor: theme.backgroundDefault,
+        borderColor: theme.border,
+      }}
     >
       <View
-        style={[
-          styles.checkbox,
-          {
-            borderColor: checked ? theme.success : theme.border,
-            backgroundColor: checked ? theme.success : "transparent",
-          },
-        ]}
+        className="w-5 h-5 rounded border-2 items-center justify-center mr-3"
+        style={{
+          borderColor: checked ? theme.success : theme.border,
+          backgroundColor: checked ? theme.success : "transparent",
+        }}
       >
         {checked ? (
           <Feather name="check" size={12} color={theme.backgroundRoot} />
         ) : null}
       </View>
       <ThemedText
-        style={[
-          styles.label,
-          { opacity: checked ? 0.6 : 1 },
-          checked && styles.checked,
-        ]}
+        className={`flex-1 text-sm leading-5 ${checked ? "line-through" : ""}`}
+        style={{ opacity: checked ? 0.6 : 1 }}
         numberOfLines={2}
       >
         {label}
@@ -62,31 +55,3 @@ export function ChecklistItem({
     </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: Spacing.md,
-    borderRadius: BorderRadius.sm,
-    borderWidth: 1,
-    marginBottom: Spacing.sm,
-  },
-  checkbox: {
-    width: 20,
-    height: 20,
-    borderRadius: 4,
-    borderWidth: 2,
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: Spacing.md,
-  },
-  label: {
-    flex: 1,
-    fontSize: 14,
-    lineHeight: 20,
-  },
-  checked: {
-    textDecorationLine: "line-through",
-  },
-});

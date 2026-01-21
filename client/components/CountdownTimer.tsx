@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -11,7 +11,7 @@ import Animated, {
 
 import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@/hooks/useTheme";
-import { Spacing, BorderRadius } from "@/constants/theme";
+import { Spacing } from "@/constants/theme";
 
 interface CountdownTimerProps {
   endTime: number | null;
@@ -72,9 +72,10 @@ export function CountdownTimer({ endTime }: CountdownTimerProps) {
   if (!endTime) {
     return (
       <View
-        style={[styles.container, { backgroundColor: theme.backgroundDefault }]}
+        className="px-4 py-2 rounded-[18px] items-center"
+        style={{ backgroundColor: theme.backgroundDefault }}
       >
-        <ThemedText style={[styles.noTimer, { color: theme.textSecondary }]}>
+        <ThemedText style={{ color: theme.textSecondary, fontSize: 12, fontWeight: "500" }}>
           Set deadline in settings
         </ThemedText>
       </View>
@@ -85,42 +86,24 @@ export function CountdownTimer({ endTime }: CountdownTimerProps) {
 
   return (
     <Animated.View
+      className="px-4 py-2 rounded-[18px] items-center"
       style={[
-        styles.container,
         { backgroundColor: theme.backgroundDefault },
         animatedStyle,
       ]}
     >
-      <ThemedText style={[styles.time, { color: timerColor }]}>
+      <ThemedText
+        className="text-[32px] font-bold tracking-widest"
+        style={{ color: timerColor }}
+      >
         {formatTime(timeLeft.hours)}:{formatTime(timeLeft.minutes)}
       </ThemedText>
-      <ThemedText style={[styles.label, { color: theme.textSecondary }]}>
+      <ThemedText
+        className="text-[10px] font-medium tracking-wider mt-0.5"
+        style={{ color: theme.textSecondary }}
+      >
         REMAINING
       </ThemedText>
     </Animated.View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.sm,
-    borderRadius: BorderRadius.md,
-    alignItems: "center",
-  },
-  time: {
-    fontSize: 32,
-    fontWeight: "700",
-    letterSpacing: 2,
-  },
-  label: {
-    fontSize: 10,
-    fontWeight: "500",
-    letterSpacing: 1.5,
-    marginTop: 2,
-  },
-  noTimer: {
-    fontSize: 12,
-    fontWeight: "500",
-  },
-});

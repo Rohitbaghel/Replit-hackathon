@@ -1,3 +1,4 @@
+import "../global.css";
 import { registerRootComponent } from "expo";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";

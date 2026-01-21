@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Feather } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
-import { Platform, StyleSheet } from "react-native";
+import { Platform } from "react-native";
 
 import IdeaStackNavigator from "@/navigation/IdeaStackNavigator";
 import BuildStackNavigator from "@/navigation/BuildStackNavigator";
@@ -43,7 +43,7 @@ export default function MainTabNavigator() {
             <BlurView
               intensity={100}
               tint={isDark ? "dark" : "light"}
-              style={StyleSheet.absoluteFill}
+              style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
             />
           ) : null,
         headerShown: false,

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Image, ImageSourcePropType } from "react-native";
+import { View, Image, ImageSourcePropType } from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@/hooks/useTheme";
@@ -15,40 +15,28 @@ export function EmptyState({ image, title, subtitle }: EmptyStateProps) {
   const { theme } = useTheme();
 
   return (
-    <View style={styles.container}>
-      <Image source={image} style={styles.image} resizeMode="contain" />
-      <ThemedText type="h3" style={styles.title}>
+    <View
+      className="flex-1 items-center justify-center"
+      style={{
+        paddingHorizontal: Spacing["3xl"],
+        paddingVertical: Spacing["5xl"],
+      }}
+    >
+      <Image
+        source={image}
+        className="w-[180px] h-[180px] mb-6"
+        resizeMode="contain"
+      />
+      <ThemedText type="h3" className="text-center mb-2">
         {title}
       </ThemedText>
       <ThemedText
         type="body"
-        style={[styles.subtitle, { color: theme.textSecondary }]}
+        className="text-center"
+        style={{ color: theme.textSecondary, lineHeight: 22 }}
       >
         {subtitle}
       </ThemedText>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: Spacing["3xl"],
-    paddingVertical: Spacing["5xl"],
-  },
-  image: {
-    width: 180,
-    height: 180,
-    marginBottom: Spacing["2xl"],
-  },
-  title: {
-    textAlign: "center",
-    marginBottom: Spacing.sm,
-  },
-  subtitle: {
-    textAlign: "center",
-    lineHeight: 22,
-  },
-});

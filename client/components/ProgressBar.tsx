@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -8,7 +8,7 @@ import Animated, {
 
 import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@/hooks/useTheme";
-import { Spacing, BorderRadius } from "@/constants/theme";
+import { Spacing } from "@/constants/theme";
 
 interface ProgressBarProps {
   completed: number;
@@ -33,8 +33,8 @@ export function ProgressBar({ completed, total }: ProgressBarProps) {
   }));
 
   return (
-    <View style={styles.container}>
-      <View style={styles.labelRow}>
+    <View className="mb-5">
+      <View className="flex-row justify-between items-center mb-2">
         <ThemedText type="small" style={{ color: theme.textSecondary }}>
           Progress
         </ThemedText>
@@ -43,37 +43,14 @@ export function ProgressBar({ completed, total }: ProgressBarProps) {
         </ThemedText>
       </View>
       <View
-        style={[styles.track, { backgroundColor: theme.backgroundSecondary }]}
+        className="h-2 rounded-full overflow-hidden"
+        style={{ backgroundColor: theme.backgroundSecondary }}
       >
         <Animated.View
-          style={[
-            styles.fill,
-            { backgroundColor: theme.primary },
-            animatedStyle,
-          ]}
+          className="h-full rounded-full"
+          style={[{ backgroundColor: theme.primary }, animatedStyle]}
         />
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: Spacing.xl,
-  },
-  labelRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: Spacing.sm,
-  },
-  track: {
-    height: 8,
-    borderRadius: BorderRadius.full,
-    overflow: "hidden",
-  },
-  fill: {
-    height: "100%",
-    borderRadius: BorderRadius.full,
-  },
-});

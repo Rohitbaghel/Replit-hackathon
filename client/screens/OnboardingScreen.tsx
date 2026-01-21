@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   SafeAreaView,
   TouchableOpacity,
   Dimensions,
@@ -249,24 +248,28 @@ export default function OnboardingScreen() {
   // }, [activeIndex]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView className="flex-1 overflow-hidden bg-[#151515]">
       <StatusBar barStyle="light-content" />
 
       {/* Skip – top-right, hidden on last screen */}
       {activeIndex < ONBOARDING_PAGES.length - 1 && (
         <TouchableOpacity
-          style={styles.skip}
+          className="absolute top-0 right-0 z-10 py-3 px-5"
           onPress={completeOnboarding}
           activeOpacity={0.7}
         >
-          <Text style={styles.skipText}>Skip →</Text>
+          <Text className="text-sm text-white/45 font-medium">Skip →</Text>
         </TouchableOpacity>
       )}
 
       {/* Abstract images – upper half */}
-      <View style={styles.shapesWrap} pointerEvents="none">
+      <View
+        className="absolute top-0 left-0 right-0 overflow-visible"
+        style={{ height: height * 0.5 }}
+        pointerEvents="none"
+      >
         {/* Concentric circles with gradient – behind shapes */}
-        <Svg width={width} height={sh} style={styles.circlesSvg}>
+        <Svg width={width} height={sh} style={{ position: "absolute", top: 0, left: 0 }}>
           <Defs>
             <LinearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
               <Stop offset="0%" stopColor="rgba(45,50,72,0.35)" />
@@ -316,27 +319,15 @@ export default function OnboardingScreen() {
         </Svg>
         {/* Top right – C-shaped (light blue/white) */}
         <Animated.View style={animated1}>
-          <Image
-            source={abstract1}
-            style={styles.abstractImg}
-            resizeMode="contain"
-          />
+          <Image source={abstract1} className="w-full h-full" resizeMode="contain" />
         </Animated.View>
         {/* Bottom right – bean (yellow/cream) */}
         <Animated.View style={animated2}>
-          <Image
-            source={abstract2}
-            style={styles.abstractImg}
-            resizeMode="contain"
-          />
+          <Image source={abstract2} className="w-full h-full" resizeMode="contain" />
         </Animated.View>
         {/* Middle left – spiral (pink/off-white) */}
         <Animated.View style={animated3}>
-          <Image
-            source={abstract3}
-            style={styles.abstractImg}
-            resizeMode="contain"
-          />
+          <Image source={abstract3} className="w-full h-full" resizeMode="contain" />
         </Animated.View>
       </View>
 
@@ -351,15 +342,25 @@ export default function OnboardingScreen() {
         onScroll={updateIndex}
         onScrollEndDrag={updateIndex}
         renderItem={({ item }) => (
-          <View style={styles.page}>
-            <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.subtitle}>{item.subtitle}</Text>
+          <View
+            className="px-7 justify-start"
+            style={{ width, paddingTop: height * 0.55 }}
+          >
+            <Text className="text-[32px] leading-[42px] font-semibold text-white text-left mb-4">
+              {item.title}
+            </Text>
+            <Text
+              className="text-base font-normal text-left"
+              style={{ lineHeight: 26, color: `rgba(255,255,255,${SUBTITLE_OPACITY})` }}
+            >
+              {item.subtitle}
+            </Text>
           </View>
         )}
       />
 
       {/* CTA – pill, bottom */}
-      <View style={styles.ctaWrap}>
+      <View className="px-6 pb-6">
         <PrimaryButton
           onPress={handleNext}
           backgroundColor={CTA_BG}
@@ -371,66 +372,3 @@ export default function OnboardingScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: BG_DARK,
-    overflow: "hidden",
-  },
-  skip: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    zIndex: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-  },
-  skipText: {
-    fontSize: 14,
-    color: "rgba(255,255,255,0.45)",
-    fontWeight: "500",
-  },
-  shapesWrap: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    height: height * 0.5,
-    overflow: "visible",
-  },
-  circlesSvg: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-  },
-  abstractImg: {
-    width: "100%",
-    height: "100%",
-  },
-  page: {
-    width,
-    paddingHorizontal: 28,
-    paddingTop: height * 0.55,
-    justifyContent: "flex-start",
-  },
-  title: {
-    fontSize: 32,
-    lineHeight: 42,
-    fontWeight: "600",
-    color: "#FFFFFF",
-    textAlign: "left",
-    marginBottom: 16,
-  },
-  subtitle: {
-    fontSize: 16,
-    lineHeight: 26,
-    fontWeight: "400",
-    color: `rgba(255,255,255,${SUBTITLE_OPACITY})`,
-    textAlign: "left",
-  },
-  ctaWrap: {
-    paddingHorizontal: 24,
-    paddingBottom: 24,
-  },
-});

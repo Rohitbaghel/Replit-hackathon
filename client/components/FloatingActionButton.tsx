@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Pressable } from "react-native";
+import { Pressable } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import Animated, {
@@ -47,8 +47,8 @@ export function FloatingActionButton({
       onPress={handlePress}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
+      className="absolute right-5 w-14 h-14 rounded-full items-center justify-center"
       style={[
-        styles.fab,
         { backgroundColor: theme.primary, bottom },
         Shadows.fab,
         animatedStyle,
@@ -58,15 +58,3 @@ export function FloatingActionButton({
     </AnimatedPressable>
   );
 }
-
-const styles = StyleSheet.create({
-  fab: {
-    position: "absolute",
-    right: 20,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

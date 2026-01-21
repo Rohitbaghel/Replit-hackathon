@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { View, StyleSheet, Image } from "react-native";
+import { View, Image } from "react-native";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
@@ -23,7 +23,7 @@ export default function IdeaScreen() {
   });
   const [saving, setSaving] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const saveTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
     storage.getIdea().then((data) => {
@@ -52,39 +52,35 @@ export default function IdeaScreen() {
   const hasContent = idea.problem || idea.solution || idea.uniqueAngle;
 
   if (!loaded) {
-    return (
-      <View
-        style={[styles.container, { backgroundColor: theme.backgroundRoot }]}
-      />
-    );
+    return <View className="flex-1" style={{ backgroundColor: theme.backgroundRoot }} />;
   }
 
   return (
     <KeyboardAwareScrollViewCompat
-      style={[styles.container, { backgroundColor: theme.backgroundRoot }]}
-      contentContainerStyle={[
-        styles.content,
-        {
-          paddingTop: headerHeight + Spacing.xl,
-          paddingBottom: tabBarHeight + Spacing["3xl"],
-        },
-      ]}
+      className="flex-1"
+      style={{ backgroundColor: theme.backgroundRoot }}
+      contentContainerStyle={{
+        paddingHorizontal: Spacing.lg,
+        paddingTop: headerHeight + Spacing.xl,
+        paddingBottom: tabBarHeight + Spacing["3xl"],
+      }}
     >
-      <View style={styles.header}>
+      <View className="flex-row justify-between items-center mb-6">
         <ThemedText type="h1">The Idea</ThemedText>
         <AutoSaveIndicator saving={saving} />
       </View>
 
       {!hasContent ? (
-        <View style={styles.emptyContainer}>
+        <View className="items-center mb-6">
           <Image
             source={require("../../assets/images/idea-start.png")}
-            style={styles.emptyImage}
+            className="w-[140px] h-[140px] mb-4"
             resizeMode="contain"
           />
           <ThemedText
             type="body"
-            style={[styles.emptyText, { color: theme.textSecondary }]}
+            className="text-center mb-4"
+            style={{ color: theme.textSecondary }}
           >
             Start capturing your brilliant idea below
           </ThemedText>
@@ -120,31 +116,3 @@ export default function IdeaScreen() {
     </KeyboardAwareScrollViewCompat>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  content: {
-    paddingHorizontal: Spacing.lg,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: Spacing["2xl"],
-  },
-  emptyContainer: {
-    alignItems: "center",
-    marginBottom: Spacing["2xl"],
-  },
-  emptyImage: {
-    width: 140,
-    height: 140,
-    marginBottom: Spacing.lg,
-  },
-  emptyText: {
-    textAlign: "center",
-    marginBottom: Spacing.lg,
-  },
-});

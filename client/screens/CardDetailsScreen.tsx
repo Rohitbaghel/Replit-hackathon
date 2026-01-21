@@ -2,7 +2,6 @@ import React from "react";
 import {
   View,
   Text,
-  StyleSheet,
   Image,
   SafeAreaView,
   TouchableOpacity,
@@ -16,98 +15,50 @@ export default function CardDetailsScreen() {
   const { card } = route.params;
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+    <SafeAreaView className="flex-1 bg-white">
+      <View className="flex-row items-center justify-between p-5 border-b border-gray-200">
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Feather name="arrow-left" size={24} color="black" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Card Details</Text>
-        <View style={{ width: 24 }} />
+        <Text className="text-lg font-semibold">Card Details</Text>
+        <View className="w-6" />
       </View>
 
-      <View style={styles.content}>
-        <View style={styles.cardContainer}>
-          <Image source={{ uri: card.cardImage }} style={styles.cardImage} />
+      <View className="p-5">
+        <View
+          className="w-full h-[220px] rounded-[20px] overflow-hidden mb-[30px]"
+          style={{
+            elevation: 10,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 5 },
+            shadowOpacity: 0.3,
+            shadowRadius: 10,
+          }}
+        >
+          <Image source={{ uri: card.cardImage }} className="w-full h-full" />
         </View>
 
-        <View style={styles.infoSection}>
-          <View style={styles.infoRow}>
-            <Text style={styles.label}>Bank</Text>
-            <Text style={styles.value}>{card.bankName}</Text>
+        <View className="bg-gray-100 rounded-[20px] p-5">
+          <View className="flex-row justify-between py-4 border-b border-gray-200">
+            <Text className="text-gray-500 text-sm">Bank</Text>
+            <Text className="text-base font-semibold text-[#1a1a1a]">{card.bankName}</Text>
           </View>
-          <View style={styles.infoRow}>
-            <Text style={styles.label}>Card Type</Text>
-            <Text style={styles.value}>{card.cardType}</Text>
+          <View className="flex-row justify-between py-4 border-b border-gray-200">
+            <Text className="text-gray-500 text-sm">Card Type</Text>
+            <Text className="text-base font-semibold text-[#1a1a1a]">{card.cardType}</Text>
           </View>
-          <View style={styles.infoRow}>
-            <Text style={styles.label}>Card Number</Text>
-            <Text style={styles.value}>•••• •••• •••• {card.lastFour}</Text>
+          <View className="flex-row justify-between py-4 border-b border-gray-200">
+            <Text className="text-gray-500 text-sm">Card Number</Text>
+            <Text className="text-base font-semibold text-[#1a1a1a]">
+              •••• •••• •••• {card.lastFour}
+            </Text>
           </View>
-          <View style={styles.infoRow}>
-            <Text style={styles.label}>Card Holder</Text>
-            <Text style={styles.value}>{card.cardHolder}</Text>
+          <View className="flex-row justify-between py-4">
+            <Text className="text-gray-500 text-sm">Card Holder</Text>
+            <Text className="text-base font-semibold text-[#1a1a1a]">{card.cardHolder}</Text>
           </View>
         </View>
       </View>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-  },
-  content: {
-    padding: 20,
-  },
-  cardContainer: {
-    width: "100%",
-    height: 220,
-    borderRadius: 20,
-    overflow: "hidden",
-    marginBottom: 30,
-    elevation: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
-  },
-  cardImage: {
-    width: "100%",
-    height: "100%",
-  },
-  infoSection: {
-    backgroundColor: "#f8f9fa",
-    borderRadius: 20,
-    padding: 20,
-  },
-  infoRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-  },
-  label: {
-    color: "#666",
-    fontSize: 14,
-  },
-  value: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#1a1a1a",
-  },
-});

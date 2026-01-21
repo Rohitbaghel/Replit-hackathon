@@ -2,19 +2,14 @@ import React from "react";
 import {
   View,
   Text,
-  StyleSheet,
-  FlatList,
   TouchableOpacity,
   Image,
   SafeAreaView,
   ScrollView,
-  Dimensions,
 } from "react-native";
 import { useCards } from "../hooks/useCardContext";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-
-const { width } = Dimensions.get("window");
 
 const SHARED_USERS = [
   {
@@ -30,105 +25,67 @@ export default function CardListScreen() {
   const navigation = useNavigation<any>();
 
   const renderCard = (card: any, index: number) => {
-    const isMain = index === cards.length - 1; // Last card is "on top"
+    const isMain = index === cards.length - 1;
+    const textColor = index % 4 === 1 || index % 4 === 0 ? "#1a1a1a" : "#ffffff";
+    const cardColor =
+      index % 4 === 0 ? "#76e076" : index % 4 === 1 ? "#f5d94d" : index % 4 === 2 ? "#76a5f5" : "#e05244";
 
     return (
       <TouchableOpacity
         key={card.id}
         activeOpacity={0.9}
-        style={[
-          styles.card,
-          {
-            backgroundColor:
-              index % 4 === 0
-                ? "#76e076"
-                : index % 4 === 1
-                  ? "#f5d94d"
-                  : index % 4 === 2
-                    ? "#76a5f5"
-                    : "#e05244",
-            marginTop: index === 0 ? 0 : -140,
-            zIndex: index,
-          },
-          isMain && styles.mainCard,
-        ]}
+        className={`rounded-[32px] p-6 ${isMain ? "h-[240px]" : "h-[200px]"}`}
+        style={{
+          backgroundColor: cardColor,
+          marginTop: index === 0 ? 0 : -140,
+          zIndex: index,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 10 },
+          shadowOpacity: 0.3,
+          shadowRadius: 20,
+          elevation: 10,
+        }}
         onPress={() => navigation.navigate("CardDetails", { card })}
       >
-        <View style={styles.cardHeader}>
-          <Text
-            style={[
-              styles.bankName,
-              {
-                color:
-                  index % 4 === 1 || index % 4 === 0 ? "#1a1a1a" : "#ffffff",
-              },
-            ]}
-          >
+        <View className="flex-row justify-between items-center">
+          <Text className="text-base font-semibold" style={{ color: textColor }}>
             {card.bankName}
           </Text>
           <Text
-            style={[
-              styles.cardNumber,
-              {
-                color:
-                  index % 4 === 1 || index % 4 === 0 ? "#1a1a1a" : "#ffffff",
-                opacity: 0.7,
-              },
-            ]}
+            className="text-sm tracking-wider"
+            style={{ color: textColor, opacity: 0.7 }}
           >
             •••• {card.lastFour}
           </Text>
         </View>
 
         {isMain && (
-          <View style={styles.cardDetails}>
-            <View style={styles.balanceRow}>
-              <Text style={[styles.balanceText, { color: "#ffffff" }]}>
-                $3,687
-              </Text>
+          <View className="mt-5">
+            <View className="flex-row justify-between items-center">
+              <Text className="text-[42px] font-bold text-white">$3,687</Text>
               <Ionicons
                 name="wifi-outline"
                 size={24}
                 color="#ffffff"
-                style={styles.wifiIcon}
+                style={{ transform: [{ rotate: "90deg" }], opacity: 0.8 }}
               />
             </View>
-            <View style={styles.cardFooter}>
+            <View className="flex-row mt-5 items-center">
               <View>
-                <Text
-                  style={[styles.label, { color: "#ffffff", opacity: 0.6 }]}
-                >
+                <Text className="text-[10px] font-medium tracking-wide mb-1 text-white/60">
                   EXPIRATION
                 </Text>
-                <Text style={[styles.info, { color: "#ffffff" }]}>12/24</Text>
+                <Text className="text-sm font-semibold text-white">12/24</Text>
               </View>
-              <View style={styles.holderInfo}>
-                <Text
-                  style={[styles.label, { color: "#ffffff", opacity: 0.6 }]}
-                >
+              <View className="ml-[30px] flex-1">
+                <Text className="text-[10px] font-medium tracking-wide mb-1 text-white/60">
                   CARD HOLDER
                 </Text>
-                <Text style={[styles.info, { color: "#ffffff" }]}>
-                  {card.cardHolder}
-                </Text>
+                <Text className="text-sm font-semibold text-white">{card.cardHolder}</Text>
               </View>
-              <View style={styles.mastercardLogo}>
-                <View
-                  style={[
-                    styles.mcCircle,
-                    { backgroundColor: "#eb001b", opacity: 0.8 },
-                  ]}
-                />
-                <View
-                  style={[
-                    styles.mcCircle,
-                    {
-                      backgroundColor: "#f79e1b",
-                      marginLeft: -10,
-                      opacity: 0.8,
-                    },
-                  ]}
-                />
+              <View className="flex-row">
+                <View className="w-8 h-8 rounded-full bg-[#eb001b] opacity-80" />
+                <View className="w-8 h-8 rounded-full -ml-2.5 bg-[#f79e1b] opacity-80" />
               </View>
             </View>
           </View>
@@ -138,47 +95,50 @@ export default function CardListScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+    <SafeAreaView className="flex-1 bg-[#0a101f]">
+      <View className="flex-row justify-between items-center px-6 pt-2.5 mb-5">
         <Image
           source={{ uri: "https://i.pravatar.cc/150?u=me" }}
-          style={styles.profileImage}
+          className="w-11 h-11 rounded-[22px] border-2 border-[#1e2638]"
         />
-        <View style={styles.headerIcons}>
-          <TouchableOpacity style={styles.iconButton}>
+        <View className="flex-row">
+          <TouchableOpacity className="ml-5">
             <Feather name="search" size={24} color="#ffffff" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton}>
+          <TouchableOpacity className="ml-5">
             <Ionicons name="grid-outline" size={24} color="#ffffff" />
           </TouchableOpacity>
         </View>
       </View>
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.titleSection}>
-          <Text style={styles.title}>My cards</Text>
+      <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
+        <View className="flex-row justify-between items-center px-6 mb-[30px]">
+          <Text className="text-4xl font-semibold text-white">My cards</Text>
           <TouchableOpacity
-            style={styles.addButton}
+            className="w-12 h-12 rounded-full bg-[#1e2638] justify-center items-center"
             onPress={() => navigation.navigate("AddCard")}
           >
             <Feather name="plus" size={24} color="#ffffff" />
           </TouchableOpacity>
         </View>
 
-        <View style={styles.cardsContainer}>
+        <View className="px-6 mb-10">
           {cards.map((card, index) => renderCard(card, index))}
         </View>
 
-        <View style={styles.sharedSection}>
-          <Text style={styles.sectionTitle}>Shared accounts</Text>
-          <View style={styles.sharedUsersRow}>
-            <TouchableOpacity style={styles.addSharedButton}>
+        <View className="mt-5 px-6">
+          <Text className="text-2xl font-semibold text-white mb-5">Shared accounts</Text>
+          <View className="flex-row items-center">
+            <TouchableOpacity className="w-20 h-20 rounded-3xl bg-[#1e2638] justify-center items-center mr-3">
               <Ionicons name="person-add-outline" size={20} color="#ffffff" />
             </TouchableOpacity>
             {SHARED_USERS.map((user) => (
-              <View key={user.id} style={styles.sharedUserCard}>
-                <Image source={{ uri: user.image }} style={styles.userImage} />
-                <Text style={styles.userName} numberOfLines={2}>
+              <View
+                key={user.id}
+                className="w-[120px] h-20 rounded-3xl bg-[#1e2638] flex-row items-center px-3 mr-3"
+              >
+                <Image source={{ uri: user.image }} className="w-10 h-10 rounded-full mr-2.5" />
+                <Text className="text-white text-[13px] font-semibold flex-1" numberOfLines={2}>
                   {user.name}
                 </Text>
               </View>
@@ -189,172 +149,3 @@ export default function CardListScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#0a101f",
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 24,
-    paddingTop: 10,
-    marginBottom: 20,
-  },
-  profileImage: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    borderWidth: 2,
-    borderColor: "#1e2638",
-  },
-  headerIcons: {
-    flexDirection: "row",
-  },
-  iconButton: {
-    marginLeft: 20,
-  },
-  scrollContent: {
-    paddingBottom: 40,
-  },
-  titleSection: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 24,
-    marginBottom: 30,
-  },
-  title: {
-    fontSize: 36,
-    fontWeight: "600",
-    color: "#ffffff",
-  },
-  addButton: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: "#1e2638",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  cardsContainer: {
-    paddingHorizontal: 24,
-    marginBottom: 40,
-  },
-  card: {
-    height: 200,
-    borderRadius: 32,
-    padding: 24,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.3,
-    shadowRadius: 20,
-    elevation: 10,
-  },
-  mainCard: {
-    height: 240,
-  },
-  cardHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  bankName: {
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  cardNumber: {
-    fontSize: 14,
-    letterSpacing: 1,
-  },
-  cardDetails: {
-    marginTop: 20,
-  },
-  balanceRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  balanceText: {
-    fontSize: 42,
-    fontWeight: "700",
-  },
-  wifiIcon: {
-    transform: [{ rotate: "90deg" }],
-    opacity: 0.8,
-  },
-  cardFooter: {
-    flexDirection: "row",
-    marginTop: 20,
-    alignItems: "center",
-  },
-  holderInfo: {
-    marginLeft: 30,
-    flex: 1,
-  },
-  label: {
-    fontSize: 10,
-    fontWeight: "500",
-    letterSpacing: 0.5,
-    marginBottom: 4,
-  },
-  info: {
-    fontSize: 14,
-    fontWeight: "600",
-  },
-  mastercardLogo: {
-    flexDirection: "row",
-  },
-  mcCircle: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-  },
-  sharedSection: {
-    marginTop: 20,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: "600",
-    color: "#ffffff",
-    marginBottom: 20,
-  },
-  sharedUsersRow: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  addSharedButton: {
-    width: 80,
-    height: 80,
-    borderRadius: 24,
-    backgroundColor: "#1e2638",
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 12,
-  },
-  sharedUserCard: {
-    width: 120,
-    height: 80,
-    borderRadius: 24,
-    backgroundColor: "#1e2638",
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 12,
-    marginRight: 12,
-  },
-  userImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginRight: 10,
-  },
-  userName: {
-    color: "#ffffff",
-    fontSize: 13,
-    fontWeight: "600",
-    flex: 1,
-  },
-});

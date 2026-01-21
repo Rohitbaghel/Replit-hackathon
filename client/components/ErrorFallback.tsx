@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { reloadAppAsync } from "expo";
 import {
-  StyleSheet,
   View,
   Pressable,
   ScrollView,
@@ -12,7 +11,7 @@ import { Feather } from "@expo/vector-icons";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@/hooks/useTheme";
-import { Spacing, BorderRadius, Fonts } from "@/constants/theme";
+import { Spacing, Fonts } from "@/constants/theme";
 
 export type ErrorFallbackProps = {
   error: Error;
@@ -41,13 +40,17 @@ export function ErrorFallback({ error, resetError }: ErrorFallbackProps) {
   };
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView className="flex-1 w-full h-full justify-center items-center p-6">
       {__DEV__ ? (
         <Pressable
           onPress={() => setIsModalVisible(true)}
+          className="absolute z-10 flex-row items-center justify-center rounded-[18px]"
           style={({ pressed }) => [
-            styles.topButton,
             {
+              top: Spacing["2xl"] + Spacing.lg,
+              right: Spacing.lg,
+              width: 44,
+              height: 44,
               backgroundColor: theme.backgroundDefault,
               opacity: pressed ? 0.8 : 1,
             },
@@ -57,30 +60,32 @@ export function ErrorFallback({ error, resetError }: ErrorFallbackProps) {
         </Pressable>
       ) : null}
 
-      <View style={styles.content}>
-        <ThemedText type="h1" style={styles.title}>
+      <View className="items-center justify-center w-full max-w-[600px] gap-4">
+        <ThemedText type="h1" className="text-center" style={{ lineHeight: 40 }}>
           Something went wrong
         </ThemedText>
 
-        <ThemedText type="body" style={styles.message}>
+        <ThemedText type="body" className="text-center opacity-70" style={{ lineHeight: 24 }}>
           Please reload the app to continue.
         </ThemedText>
 
         <Pressable
           onPress={handleRestart}
+          className="py-4 px-6 rounded-[18px] min-w-[200px]"
           style={({ pressed }) => [
-            styles.button,
             {
               backgroundColor: theme.link,
               opacity: pressed ? 0.9 : 1,
               transform: [{ scale: pressed ? 0.98 : 1 }],
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.1,
+              shadowRadius: 4,
+              elevation: 3,
             },
           ]}
         >
-          <ThemedText
-            type="body"
-            style={[styles.buttonText, { color: theme.buttonText }]}
-          >
+          <ThemedText type="body" style={{ color: theme.buttonText, fontWeight: "700", textAlign: "center", fontSize: 16 }}>
             Try Again
           </ThemedText>
         </Pressable>
@@ -93,42 +98,31 @@ export function ErrorFallback({ error, resetError }: ErrorFallbackProps) {
           transparent={true}
           onRequestClose={() => setIsModalVisible(false)}
         >
-          <View style={styles.modalOverlay}>
-            <ThemedView style={styles.modalContainer}>
-              <View style={styles.modalHeader}>
-                <ThemedText type="h2" style={styles.modalTitle}>
+          <View className="flex-1 bg-black/50 justify-end">
+            <ThemedView className="w-full h-[90%] rounded-t-3xl">
+              <View className="flex-row justify-between items-center px-4 pt-4 pb-3 border-b border-gray-500/20">
+                <ThemedText type="h2" className="font-semibold">
                   Error Details
                 </ThemedText>
                 <Pressable
                   onPress={() => setIsModalVisible(false)}
-                  style={({ pressed }) => [
-                    styles.closeButton,
-                    { opacity: pressed ? 0.6 : 1 },
-                  ]}
+                  style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1 })}
                 >
                   <Feather name="x" size={24} color={theme.text} />
                 </Pressable>
               </View>
 
-              <ScrollView
-                style={styles.modalScrollView}
-                contentContainerStyle={styles.modalScrollContent}
-                showsVerticalScrollIndicator
-              >
+              <ScrollView className="flex-1" contentContainerStyle={{ padding: Spacing.lg }}>
                 <View
-                  style={[
-                    styles.errorContainer,
-                    { backgroundColor: theme.backgroundDefault },
-                  ]}
+                  className="w-full rounded-[18px] overflow-hidden p-4"
+                  style={{ backgroundColor: theme.backgroundDefault }}
                 >
                   <Text
-                    style={[
-                      styles.errorText,
-                      {
-                        color: theme.text,
-                        fontFamily: Fonts?.mono || "monospace",
-                      },
-                    ]}
+                    className="text-xs leading-[18px] w-full"
+                    style={{
+                      color: theme.text,
+                      fontFamily: Fonts?.mono || "monospace",
+                    }}
                     selectable
                   >
                     {formatErrorDetails()}
@@ -142,105 +136,3 @@ export function ErrorFallback({ error, resetError }: ErrorFallbackProps) {
     </ThemedView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: Spacing["2xl"],
-  },
-  content: {
-    alignItems: "center",
-    justifyContent: "center",
-    gap: Spacing.lg,
-    width: "100%",
-    maxWidth: 600,
-  },
-  title: {
-    textAlign: "center",
-    lineHeight: 40,
-  },
-  message: {
-    textAlign: "center",
-    opacity: 0.7,
-    lineHeight: 24,
-  },
-  topButton: {
-    position: "absolute",
-    top: Spacing["2xl"] + Spacing.lg,
-    right: Spacing.lg,
-    width: 44,
-    height: 44,
-    borderRadius: BorderRadius.md,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 10,
-  },
-  button: {
-    paddingVertical: Spacing.lg,
-    borderRadius: BorderRadius.md,
-    paddingHorizontal: Spacing["2xl"],
-    minWidth: 200,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  buttonText: {
-    fontWeight: "700",
-    textAlign: "center",
-    fontSize: 16,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "flex-end",
-  },
-  modalContainer: {
-    width: "100%",
-    height: "90%",
-    borderTopLeftRadius: BorderRadius.lg,
-    borderTopRightRadius: BorderRadius.lg,
-  },
-  modalHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: Spacing.lg,
-    paddingTop: Spacing.lg,
-    paddingBottom: Spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: "rgba(128, 128, 128, 0.2)",
-  },
-  modalTitle: {
-    fontWeight: "600",
-  },
-  closeButton: {
-    padding: Spacing.xs,
-  },
-  modalScrollView: {
-    flex: 1,
-  },
-  modalScrollContent: {
-    padding: Spacing.lg,
-  },
-  errorContainer: {
-    width: "100%",
-    borderRadius: BorderRadius.md,
-    overflow: "hidden",
-    padding: Spacing.lg,
-  },
-  errorText: {
-    fontSize: 12,
-    lineHeight: 18,
-    width: "100%",
-  },
-});

@@ -1,9 +1,9 @@
 import React from "react";
-import { View, TextInput, StyleSheet } from "react-native";
+import { View, TextInput } from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@/hooks/useTheme";
-import { Spacing, BorderRadius } from "@/constants/theme";
+import { Spacing } from "@/constants/theme";
 
 interface TextAreaProps {
   label: string;
@@ -25,8 +25,8 @@ export function TextArea({
   const { theme } = useTheme();
 
   return (
-    <View style={styles.container}>
-      <View style={styles.labelRow}>
+    <View className="mb-5">
+      <View className="flex-row justify-between items-center mb-2">
         <ThemedText type="label" style={{ color: theme.textSecondary }}>
           {label}
         </ThemedText>
@@ -51,36 +51,15 @@ export function TextArea({
         placeholderTextColor={theme.textSecondary}
         multiline
         maxLength={maxLength}
-        style={[
-          styles.input,
-          {
-            backgroundColor: theme.backgroundDefault,
-            borderColor: theme.border,
-            color: theme.text,
-            minHeight,
-          },
-        ]}
+        className="border rounded-[18px] p-4 text-[15px] leading-[22px]"
+        style={{
+          backgroundColor: theme.backgroundDefault,
+          borderColor: theme.border,
+          color: theme.text,
+          minHeight,
+        }}
         textAlignVertical="top"
       />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: Spacing.xl,
-  },
-  labelRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: Spacing.sm,
-  },
-  input: {
-    borderWidth: 1,
-    borderRadius: BorderRadius.md,
-    padding: Spacing.lg,
-    fontSize: 15,
-    lineHeight: 22,
-  },
-});

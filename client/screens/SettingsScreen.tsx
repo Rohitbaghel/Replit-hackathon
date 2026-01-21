@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-  StyleSheet,
   TextInput,
   Pressable,
   Alert,
@@ -18,7 +17,7 @@ import { KeyboardAwareScrollViewCompat } from "@/components/KeyboardAwareScrollV
 import { ThemedText } from "@/components/ThemedText";
 import { Button } from "@/components/Button";
 import { useTheme } from "@/hooks/useTheme";
-import { Spacing, BorderRadius } from "@/constants/theme";
+import { Spacing } from "@/constants/theme";
 import { storage, SettingsData } from "@/lib/storage";
 
 export default function SettingsScreen() {
@@ -114,25 +113,20 @@ export default function SettingsScreen() {
   };
 
   if (!loaded) {
-    return (
-      <View
-        style={[styles.container, { backgroundColor: theme.backgroundRoot }]}
-      />
-    );
+    return <View className="flex-1" style={{ backgroundColor: theme.backgroundRoot }} />;
   }
 
   return (
     <KeyboardAwareScrollViewCompat
-      style={[styles.container, { backgroundColor: theme.backgroundRoot }]}
-      contentContainerStyle={[
-        styles.content,
-        {
-          paddingTop: headerHeight + Spacing.xl,
-          paddingBottom: insets.bottom + Spacing["3xl"],
-        },
-      ]}
+      className="flex-1"
+      style={{ backgroundColor: theme.backgroundRoot }}
+      contentContainerStyle={{
+        paddingHorizontal: Spacing.lg,
+        paddingTop: headerHeight + Spacing.xl,
+        paddingBottom: insets.bottom + Spacing["3xl"],
+      }}
     >
-      <View style={styles.section}>
+      <View className="mb-6">
         <ThemedText
           type="label"
           style={{ color: theme.textSecondary, marginBottom: Spacing.sm }}
@@ -144,18 +138,17 @@ export default function SettingsScreen() {
           onChangeText={(text) => setSettings({ ...settings, teamName: text })}
           placeholder="Your team name"
           placeholderTextColor={theme.textSecondary}
-          style={[
-            styles.input,
-            {
-              backgroundColor: theme.backgroundDefault,
-              borderColor: theme.border,
-              color: theme.text,
-            },
-          ]}
+          className="border rounded-[18px] px-4 text-base"
+          style={{
+            height: Spacing.inputHeight,
+            backgroundColor: theme.backgroundDefault,
+            borderColor: theme.border,
+            color: theme.text,
+          }}
         />
       </View>
 
-      <View style={styles.section}>
+      <View className="mb-6">
         <ThemedText
           type="label"
           style={{ color: theme.textSecondary, marginBottom: Spacing.sm }}
@@ -164,16 +157,15 @@ export default function SettingsScreen() {
         </ThemedText>
         <Pressable
           onPress={() => setShowDatePicker(true)}
-          style={[
-            styles.deadlineButton,
-            {
-              backgroundColor: theme.backgroundDefault,
-              borderColor: theme.border,
-            },
-          ]}
+          className="border rounded-[18px] px-4 flex-row items-center"
+          style={{
+            height: Spacing.inputHeight,
+            backgroundColor: theme.backgroundDefault,
+            borderColor: theme.border,
+          }}
         >
           <Feather name="clock" size={20} color={theme.textSecondary} />
-          <ThemedText style={styles.deadlineText}>
+          <ThemedText className="flex-1 ml-3 text-base">
             {settings.hackathonEndTime
               ? formatDeadline(settings.hackathonEndTime)
               : "Set deadline"}
@@ -189,7 +181,7 @@ export default function SettingsScreen() {
       {((showDatePicker || Platform.OS === "ios") &&
         settings.hackathonEndTime !== null) ||
       showDatePicker ? (
-        <View style={styles.pickerContainer}>
+        <View className="mb-5">
           <DateTimePicker
             value={tempDate}
             mode={Platform.OS === "ios" ? "datetime" : "date"}
@@ -211,11 +203,11 @@ export default function SettingsScreen() {
         />
       ) : null}
 
-      <View style={styles.buttonContainer}>
+      <View className="mt-4 mb-10">
         <Button onPress={handleSave}>Save Settings</Button>
       </View>
 
-      <View style={styles.dangerZone}>
+      <View className="pt-5 border-t" style={{ borderTopColor: "rgba(255, 51, 102, 0.2)" }}>
         <ThemedText
           type="label"
           style={{ color: theme.accent, marginBottom: Spacing.md }}
@@ -224,10 +216,14 @@ export default function SettingsScreen() {
         </ThemedText>
         <Pressable
           onPress={handleReset}
-          style={[styles.resetButton, { borderColor: theme.accent }]}
+          className="flex-row items-center justify-center border rounded-[18px]"
+          style={{
+            height: Spacing.inputHeight,
+            borderColor: theme.accent,
+          }}
         >
           <Feather name="trash-2" size={18} color={theme.accent} />
-          <ThemedText style={[styles.resetText, { color: theme.accent }]}>
+          <ThemedText style={{ marginLeft: Spacing.sm, fontSize: 16, fontWeight: "600", color: theme.accent }}>
             Reset Project
           </ThemedText>
         </Pressable>
@@ -235,60 +231,3 @@ export default function SettingsScreen() {
     </KeyboardAwareScrollViewCompat>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  content: {
-    paddingHorizontal: Spacing.lg,
-  },
-  section: {
-    marginBottom: Spacing["2xl"],
-  },
-  input: {
-    height: Spacing.inputHeight,
-    borderWidth: 1,
-    borderRadius: BorderRadius.md,
-    paddingHorizontal: Spacing.lg,
-    fontSize: 16,
-  },
-  deadlineButton: {
-    height: Spacing.inputHeight,
-    borderWidth: 1,
-    borderRadius: BorderRadius.md,
-    paddingHorizontal: Spacing.lg,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  deadlineText: {
-    flex: 1,
-    marginLeft: Spacing.md,
-    fontSize: 16,
-  },
-  pickerContainer: {
-    marginBottom: Spacing.xl,
-  },
-  buttonContainer: {
-    marginTop: Spacing.lg,
-    marginBottom: Spacing["4xl"],
-  },
-  dangerZone: {
-    paddingTop: Spacing.xl,
-    borderTopWidth: 1,
-    borderTopColor: "rgba(255, 51, 102, 0.2)",
-  },
-  resetButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    height: Spacing.inputHeight,
-    borderWidth: 1,
-    borderRadius: BorderRadius.md,
-  },
-  resetText: {
-    marginLeft: Spacing.sm,
-    fontSize: 16,
-    fontWeight: "600",
-  },
-});

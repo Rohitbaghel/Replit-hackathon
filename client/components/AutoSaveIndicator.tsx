@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -41,34 +41,20 @@ export function AutoSaveIndicator({ saving }: AutoSaveIndicatorProps) {
   }));
 
   return (
-    <View style={styles.container}>
+    <View className="flex-row items-center">
       <Animated.View
+        className="w-1.5 h-1.5 rounded-full mr-1"
         style={[
-          styles.dot,
           { backgroundColor: saving ? theme.accent : theme.success },
           animatedDotStyle,
         ]}
       />
-      <ThemedText style={[styles.text, { color: theme.textSecondary }]}>
+      <ThemedText
+        className="text-xs font-medium"
+        style={{ color: theme.textSecondary }}
+      >
         {saving ? "Saving..." : "Saved"}
       </ThemedText>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  dot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    marginRight: Spacing.xs,
-  },
-  text: {
-    fontSize: 12,
-    fontWeight: "500",
-  },
-});

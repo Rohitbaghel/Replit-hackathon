@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   View,
-  StyleSheet,
   Modal,
   TextInput,
   Pressable,
@@ -14,7 +13,7 @@ import * as Haptics from "expo-haptics";
 import { ThemedText } from "@/components/ThemedText";
 import { Button } from "@/components/Button";
 import { useTheme } from "@/hooks/useTheme";
-import { Spacing, BorderRadius } from "@/constants/theme";
+import { Spacing } from "@/constants/theme";
 
 interface AddTaskModalProps {
   visible: boolean;
@@ -49,13 +48,17 @@ export function AddTaskModal({ visible, onClose, onAdd }: AddTaskModalProps) {
     >
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.overlay}
+        className="flex-1 justify-center items-center"
       >
-        <Pressable style={styles.backdrop} onPress={handleClose} />
+        <Pressable
+          style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0, 0, 0, 0.6)" }}
+          onPress={handleClose}
+        />
         <View
-          style={[styles.content, { backgroundColor: theme.backgroundDefault }]}
+          className="w-[90%] max-w-[400px] rounded-3xl p-6"
+          style={{ backgroundColor: theme.backgroundDefault }}
         >
-          <View style={styles.header}>
+          <View className="flex-row justify-between items-center mb-5">
             <ThemedText type="h3">Add Task</ThemedText>
             <Pressable onPress={handleClose} hitSlop={8}>
               <Feather name="x" size={24} color={theme.text} />
@@ -66,14 +69,13 @@ export function AddTaskModal({ visible, onClose, onAdd }: AddTaskModalProps) {
             onChangeText={setTitle}
             placeholder="What needs to be done?"
             placeholderTextColor={theme.textSecondary}
-            style={[
-              styles.input,
-              {
-                backgroundColor: theme.backgroundSecondary,
-                borderColor: theme.border,
-                color: theme.text,
-              },
-            ]}
+            className="border rounded-[18px] px-4 text-base mb-5"
+            style={{
+              height: Spacing.inputHeight,
+              backgroundColor: theme.backgroundSecondary,
+              borderColor: theme.border,
+              color: theme.text,
+            }}
             autoFocus
             returnKeyType="done"
             onSubmitEditing={handleAdd}
@@ -86,35 +88,3 @@ export function AddTaskModal({ visible, onClose, onAdd }: AddTaskModalProps) {
     </Modal>
   );
 }
-
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  backdrop: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0, 0, 0, 0.6)",
-  },
-  content: {
-    width: "90%",
-    maxWidth: 400,
-    borderRadius: BorderRadius.xl,
-    padding: Spacing["2xl"],
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: Spacing.xl,
-  },
-  input: {
-    height: Spacing.inputHeight,
-    borderWidth: 1,
-    borderRadius: BorderRadius.md,
-    paddingHorizontal: Spacing.lg,
-    fontSize: 16,
-    marginBottom: Spacing.xl,
-  },
-});

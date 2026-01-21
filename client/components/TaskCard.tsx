@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Pressable } from "react-native";
+import { View, Pressable } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import Animated, {
@@ -13,7 +13,7 @@ import Animated, {
 
 import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@/hooks/useTheme";
-import { Spacing, BorderRadius } from "@/constants/theme";
+import { Spacing } from "@/constants/theme";
 import { Task } from "@/lib/storage";
 
 interface TaskCardProps {
@@ -53,8 +53,8 @@ export function TaskCard({ task, onToggle, onDelete }: TaskCardProps) {
       entering={FadeIn.duration(200)}
       exiting={FadeOut.duration(200)}
       layout={Layout.springify()}
+      className="flex-row items-center p-4 rounded-[18px] border mb-2"
       style={[
-        styles.container,
         {
           backgroundColor: theme.backgroundDefault,
           borderColor: theme.border,
@@ -64,59 +64,25 @@ export function TaskCard({ task, onToggle, onDelete }: TaskCardProps) {
       ]}
     >
       <View
-        style={[
-          styles.checkbox,
-          {
-            borderColor: task.completed ? theme.success : theme.border,
-            backgroundColor: task.completed ? theme.success : "transparent",
-          },
-        ]}
+        className="w-6 h-6 rounded-lg border-2 items-center justify-center mr-3"
+        style={{
+          borderColor: task.completed ? theme.success : theme.border,
+          backgroundColor: task.completed ? theme.success : "transparent",
+        }}
       >
         {task.completed ? (
           <Feather name="check" size={14} color={theme.backgroundRoot} />
         ) : null}
       </View>
       <ThemedText
-        style={[styles.title, task.completed && styles.completedTitle]}
+        className={`flex-1 text-[15px] font-medium ${task.completed ? "line-through" : ""}`}
         numberOfLines={2}
       >
         {task.title}
       </ThemedText>
-      <Pressable onPress={onDelete} hitSlop={8} style={styles.deleteButton}>
+      <Pressable onPress={onDelete} hitSlop={8} className="p-1 ml-2">
         <Feather name="x" size={18} color={theme.textSecondary} />
       </Pressable>
     </AnimatedPressable>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: Spacing.lg,
-    borderRadius: BorderRadius.md,
-    borderWidth: 1,
-    marginBottom: Spacing.sm,
-  },
-  checkbox: {
-    width: 24,
-    height: 24,
-    borderRadius: BorderRadius.xs,
-    borderWidth: 2,
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: Spacing.md,
-  },
-  title: {
-    flex: 1,
-    fontSize: 15,
-    fontWeight: "500",
-  },
-  completedTitle: {
-    textDecorationLine: "line-through",
-  },
-  deleteButton: {
-    padding: Spacing.xs,
-    marginLeft: Spacing.sm,
-  },
-});

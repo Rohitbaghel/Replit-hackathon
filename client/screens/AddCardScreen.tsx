@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
   Image,
-  Animated,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -19,9 +17,7 @@ export default function AddCardScreen() {
   const { addCard } = useCards();
 
   const [selectedBankId, setSelectedBankId] = useState<string | null>(null);
-  const [selectedType, setSelectedType] = useState<"Credit" | "Debit" | null>(
-    null,
-  );
+  const [selectedType, setSelectedType] = useState<"Credit" | "Debit" | null>(null);
   const [selectedCard, setSelectedCard] = useState<any | null>(null);
 
   const selectedBank = BANK_DATA.banks.find((b) => b.bankId === selectedBankId);
@@ -45,43 +41,36 @@ export default function AddCardScreen() {
   const isFormValid = selectedBank && selectedType && selectedCard;
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+    <SafeAreaView className="flex-1 bg-[#0a101f]">
+      <View className="flex-row items-center justify-between p-5 border-b border-[#1e2638]">
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Feather name="x" size={24} color="#ffffff" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Add New Card</Text>
-        <TouchableOpacity
-          onPress={handleSave}
-          disabled={!isFormValid}
-          style={{ opacity: isFormValid ? 1 : 0.3 }}
-        >
-          <Text style={styles.saveText}>Save</Text>
+        <Text className="text-lg font-semibold text-white">Add New Card</Text>
+        <TouchableOpacity onPress={handleSave} disabled={!isFormValid} style={{ opacity: isFormValid ? 1 : 0.3 }}>
+          <Text className="text-[#007AFF] font-bold text-base">Save</Text>
         </TouchableOpacity>
       </View>
 
-      <ScrollView style={styles.content}>
-        <Text style={styles.sectionTitle}>Select Bank</Text>
-        <View style={styles.bankGrid}>
+      <ScrollView className="p-5">
+        <Text className="text-base font-semibold mb-4 mt-2.5 text-white/80">Select Bank</Text>
+        <View className="flex-row flex-wrap justify-between mb-2.5">
           {BANK_DATA.banks.map((bank) => (
             <TouchableOpacity
               key={bank.bankId}
-              style={[
-                styles.bankItem,
-                selectedBankId === bank.bankId && styles.selectedItem,
-              ]}
+              className={`w-[31%] p-3 rounded-2xl bg-[#1e2638] items-center mb-3 border-2 ${
+                selectedBankId === bank.bankId ? "border-[#007AFF] bg-[#252f4a]" : "border-transparent"
+              }`}
               onPress={() => {
                 setSelectedBankId(bank.bankId);
                 setSelectedType(null);
                 setSelectedCard(null);
               }}
             >
-              <View style={styles.bankLogoPlaceholder}>
-                <Text style={styles.bankLogoText}>
-                  {bank.bankName.charAt(0)}
-                </Text>
+              <View className="w-9 h-9 rounded-full bg-[#2c3e50] justify-center items-center mb-2">
+                <Text className="text-white text-lg font-semibold">{bank.bankName.charAt(0)}</Text>
               </View>
-              <Text style={styles.bankName} numberOfLines={1}>
+              <Text className="font-semibold text-white text-[11px] text-center" numberOfLines={1}>
                 {bank.bankName}
               </Text>
             </TouchableOpacity>
@@ -89,26 +78,22 @@ export default function AddCardScreen() {
         </View>
 
         {selectedBankId && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Card Type</Text>
-            <View style={styles.typeRow}>
+          <View className="mt-2.5">
+            <Text className="text-base font-semibold mb-4 mt-2.5 text-white/80">Card Type</Text>
+            <View className="flex-row mb-6">
               {["Credit", "Debit"].map((type: any) => (
                 <TouchableOpacity
                   key={type}
-                  style={[
-                    styles.typeButton,
-                    selectedType === type && styles.selectedType,
-                  ]}
+                  className={`flex-1 py-3 rounded-2xl bg-[#1e2638] items-center mr-2.5 border ${
+                    selectedType === type ? "bg-[#007AFF] border-[#007AFF]" : "border-[#1e2638]"
+                  }`}
                   onPress={() => {
                     setSelectedType(type);
                     setSelectedCard(null);
                   }}
                 >
                   <Text
-                    style={[
-                      styles.typeText,
-                      selectedType === type && styles.selectedTypeText,
-                    ]}
+                    className={`font-semibold text-white ${selectedType === type ? "opacity-100" : "opacity-60"}`}
                   >
                     {type}
                   </Text>
@@ -119,34 +104,33 @@ export default function AddCardScreen() {
         )}
 
         {selectedType && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Select Card Design</Text>
+          <View className="mt-2.5">
+            <Text className="text-base font-semibold mb-4 mt-2.5 text-white/80">Select Card Design</Text>
             {filteredCards.length > 0 ? (
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                style={styles.cardList}
+                className="mb-[30px]"
               >
                 {filteredCards.map((card) => (
                   <TouchableOpacity
                     key={card.id}
-                    style={[
-                      styles.cardOption,
-                      selectedCard?.id === card.id && styles.selectedCardOption,
-                    ]}
+                    className={`w-[220px] mr-4 rounded-[20px] p-2.5 bg-[#1e2638] border-2 ${
+                      selectedCard?.id === card.id ? "border-[#007AFF] bg-[#252f4a]" : "border-transparent"
+                    }`}
                     onPress={() => setSelectedCard(card)}
                   >
                     <Image
                       source={{ uri: card.image }}
-                      style={styles.cardOptionImage}
+                      className="w-full h-[130px] rounded-2xl mb-2.5"
                     />
-                    <Text style={styles.cardOptionName}>{card.cardName}</Text>
-                    <Text style={styles.cardOptionTier}>{card.tier}</Text>
+                    <Text className="text-sm font-bold text-center text-white">{card.cardName}</Text>
+                    <Text className="text-[11px] text-center text-white/60 mt-0.5">{card.tier}</Text>
                   </TouchableOpacity>
                 ))}
               </ScrollView>
             ) : (
-              <Text style={styles.noCardsText}>
+              <Text className="text-white/50 text-center mt-5 italic">
                 No {selectedType} cards available for this bank yet.
               </Text>
             )}
@@ -156,151 +140,3 @@ export default function AddCardScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#0a101f",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: "#1e2638",
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: "#ffffff",
-  },
-  saveText: {
-    color: "#007AFF",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  content: {
-    padding: 20,
-  },
-  section: {
-    marginTop: 10,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 15,
-    marginTop: 10,
-    color: "#ffffff",
-    opacity: 0.8,
-  },
-  bankGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    marginBottom: 10,
-  },
-  bankItem: {
-    width: "31%",
-    padding: 12,
-    borderRadius: 16,
-    backgroundColor: "#1e2638",
-    alignItems: "center",
-    marginBottom: 12,
-    borderWidth: 2,
-    borderColor: "transparent",
-  },
-  selectedItem: {
-    borderColor: "#007AFF",
-    backgroundColor: "#252f4a",
-  },
-  bankLogoPlaceholder: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: "#2c3e50",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 8,
-  },
-  bankLogoText: {
-    color: "#ffffff",
-    fontSize: 18,
-    fontWeight: "600",
-  },
-  bankName: {
-    fontWeight: "600",
-    color: "#ffffff",
-    fontSize: 11,
-    textAlign: "center",
-  },
-  typeRow: {
-    flexDirection: "row",
-    marginBottom: 25,
-  },
-  typeButton: {
-    flex: 1,
-    paddingVertical: 12,
-    borderRadius: 15,
-    backgroundColor: "#1e2638",
-    alignItems: "center",
-    marginRight: 10,
-    borderWidth: 1,
-    borderColor: "#1e2638",
-  },
-  selectedType: {
-    backgroundColor: "#007AFF",
-    borderColor: "#007AFF",
-  },
-  typeText: {
-    fontWeight: "600",
-    color: "#ffffff",
-    opacity: 0.6,
-  },
-  selectedTypeText: {
-    color: "white",
-    opacity: 1,
-  },
-  cardList: {
-    marginBottom: 30,
-  },
-  cardOption: {
-    width: 220,
-    marginRight: 15,
-    borderRadius: 20,
-    padding: 10,
-    backgroundColor: "#1e2638",
-    borderWidth: 2,
-    borderColor: "transparent",
-  },
-  selectedCardOption: {
-    borderColor: "#007AFF",
-    backgroundColor: "#252f4a",
-  },
-  cardOptionImage: {
-    width: "100%",
-    height: 130,
-    borderRadius: 15,
-    marginBottom: 10,
-  },
-  cardOptionName: {
-    fontSize: 14,
-    fontWeight: "700",
-    textAlign: "center",
-    color: "#ffffff",
-  },
-  cardOptionTier: {
-    fontSize: 11,
-    textAlign: "center",
-    color: "#ffffff",
-    opacity: 0.6,
-    marginTop: 2,
-  },
-  noCardsText: {
-    color: "#ffffff",
-    opacity: 0.5,
-    textAlign: "center",
-    marginTop: 20,
-    fontStyle: "italic",
-  },
-});

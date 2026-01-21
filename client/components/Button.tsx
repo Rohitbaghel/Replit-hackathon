@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { StyleSheet, Pressable, ViewStyle, StyleProp } from "react-native";
+import { Pressable, ViewStyle, StyleProp } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -65,9 +65,10 @@ export function Button({
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       disabled={disabled}
+      className="rounded-[18px] items-center justify-center"
       style={[
-        styles.button,
         {
+          height: Spacing.buttonHeight,
           backgroundColor,
           opacity: disabled ? 0.5 : 1,
         },
@@ -75,21 +76,9 @@ export function Button({
         animatedStyle,
       ]}
     >
-      <ThemedText type="body" style={[styles.buttonText, { color: textColor }]}>
+      <ThemedText type="body" className="font-bold" style={{ color: textColor }}>
         {children}
       </ThemedText>
     </AnimatedPressable>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    height: Spacing.buttonHeight,
-    borderRadius: BorderRadius.md,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonText: {
-    fontWeight: "700",
-  },
-});

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Pressable, ViewStyle } from "react-native";
+import { Pressable, ViewStyle } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -9,7 +9,7 @@ import Animated, {
 
 import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@/hooks/useTheme";
-import { Spacing, BorderRadius } from "@/constants/theme";
+import { Spacing } from "@/constants/theme";
 
 interface CardProps {
   elevation?: number;
@@ -76,22 +76,20 @@ export function Card({
       onPress={onPress}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
+      className="p-5 rounded-[40px]"
       style={[
-        styles.card,
-        {
-          backgroundColor: cardBackgroundColor,
-        },
+        { backgroundColor: cardBackgroundColor },
         animatedStyle,
         style,
       ]}
     >
       {title ? (
-        <ThemedText type="h4" style={styles.cardTitle}>
+        <ThemedText type="h4" className="mb-2">
           {title}
         </ThemedText>
       ) : null}
       {description ? (
-        <ThemedText type="small" style={styles.cardDescription}>
+        <ThemedText type="small" className="opacity-70">
           {description}
         </ThemedText>
       ) : null}
@@ -99,16 +97,3 @@ export function Card({
     </AnimatedPressable>
   );
 }
-
-const styles = StyleSheet.create({
-  card: {
-    padding: Spacing.xl,
-    borderRadius: BorderRadius["2xl"],
-  },
-  cardTitle: {
-    marginBottom: Spacing.sm,
-  },
-  cardDescription: {
-    opacity: 0.7,
-  },
-});

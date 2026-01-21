@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { View, StyleSheet, FlatList, Pressable } from "react-native";
+import { View, FlatList, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -83,16 +83,14 @@ export default function BuildScreen() {
   const completedCount = tasks.filter((t) => t.completed).length;
 
   const renderHeader = () => (
-    <View style={styles.headerContent}>
-      <View style={styles.timerRow}>
+    <View className="mb-4">
+      <View className="flex-row items-center justify-between mb-5">
         <CountdownTimer endTime={settings.hackathonEndTime} />
         <Pressable
           onPress={() => navigation.navigate("Settings")}
           hitSlop={8}
-          style={[
-            styles.settingsButton,
-            { backgroundColor: theme.backgroundDefault },
-          ]}
+          className="w-11 h-11 rounded-full items-center justify-center"
+          style={{ backgroundColor: theme.backgroundDefault }}
         >
           <Feather name="settings" size={20} color={theme.text} />
         </Pressable>
@@ -112,15 +110,11 @@ export default function BuildScreen() {
   );
 
   if (!loaded) {
-    return (
-      <View
-        style={[styles.container, { backgroundColor: theme.backgroundRoot }]}
-      />
-    );
+    return <View className="flex-1" style={{ backgroundColor: theme.backgroundRoot }} />;
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.backgroundRoot }]}>
+    <View className="flex-1" style={{ backgroundColor: theme.backgroundRoot }}>
       <FlatList
         data={tasks}
         keyExtractor={(item) => item.id}
@@ -134,12 +128,8 @@ export default function BuildScreen() {
         ListHeaderComponent={renderHeader}
         ListEmptyComponent={renderEmpty}
         contentContainerStyle={[
-          styles.listContent,
-          {
-            paddingTop: headerHeight + Spacing.lg,
-            paddingBottom: tabBarHeight + 80,
-          },
-          tasks.length === 0 && styles.emptyList,
+          { paddingHorizontal: Spacing.lg, paddingTop: headerHeight + Spacing.lg, paddingBottom: tabBarHeight + 80 },
+          tasks.length === 0 && { flexGrow: 1 },
         ]}
         scrollIndicatorInsets={{ bottom: insets.bottom }}
       />
@@ -155,31 +145,3 @@ export default function BuildScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  listContent: {
-    paddingHorizontal: Spacing.lg,
-  },
-  emptyList: {
-    flexGrow: 1,
-  },
-  headerContent: {
-    marginBottom: Spacing.lg,
-  },
-  timerRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: Spacing.xl,
-  },
-  settingsButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
