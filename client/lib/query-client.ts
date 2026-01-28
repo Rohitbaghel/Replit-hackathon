@@ -1,19 +1,43 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
 /**
- * Gets the base URL for the Express API server (e.g., "http://localhost:3000")
+ * Gets the base URL for the Express API server (e.g., "http://localhost:5000")
  * @returns {string} The API base URL
  */
 export function getApiUrl(): string {
   let host = process.env.EXPO_PUBLIC_DOMAIN;
 
+  // For local development, default to localhost:5001
   if (!host) {
-    throw new Error("EXPO_PUBLIC_DOMAIN is not set");
+    // Check if we're in a browser environment
+    if (typeof window !== "undefined") {
+      // Use the current origin but change port to 5001 (where the server runs)
+      const currentOrigin = window.location.origin;
+      try {
+        const url = new URL(currentOrigin);
+        // Default to port 5001 for the API server
+        const apiUrl = `${url.protocol}//${url.hostname}:5001`;
+        console.log("[getApiUrl] Using localhost API:", apiUrl);
+        return apiUrl;
+      } catch {
+        // Fallback to localhost:5001
+        console.log("[getApiUrl] Using fallback localhost:5001");
+        return "http://localhost:5001";
+      }
+    }
+    // For non-browser environments, default to localhost:5001
+    console.log("[getApiUrl] Using localhost:5001 for non-browser");
+    return "http://localhost:5001";
   }
 
-  let url = new URL(`https://${host}`);
+  // For production/Replit, use the configured domain
+  // Handle both with and without protocol
+  if (host.startsWith("http://") || host.startsWith("https://")) {
+    return host;
+  }
 
-  return url.href;
+  // Default to https for production domains
+  return `https://${host}`;
 }
 
 async function throwIfResNotOk(res: Response) {

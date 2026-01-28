@@ -1,8 +1,12 @@
+import dotenv from "dotenv";
+import path from "path";
 import express from "express";
 import type { Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import * as fs from "fs";
-import * as path from "path";
+
+// Load .env file from project root
+dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
 const app = express();
 const log = console.log;
@@ -232,7 +236,7 @@ function setupErrorHandler(app: express.Application) {
 
   setupErrorHandler(app);
 
-  const port = parseInt(process.env.PORT || "5000", 10);
+  const port = parseInt(process.env.PORT || "5001", 10);
   server.listen(
     {
       port,

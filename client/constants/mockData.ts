@@ -7,6 +7,19 @@ export interface Card {
   cardHolder: string;
 }
 
+export interface Offer {
+  id: string;
+  title: string;
+  description: string;
+  merchant?: string;
+  category: "cashback" | "discount" | "rewards" | "other";
+  discount?: string; // e.g., "10% off", "₹500 cashback"
+  validity?: string; // e.g., "Valid till 31 Dec 2024"
+  terms?: string;
+  bankName: string;
+  cardType: string;
+}
+
 export interface Bank {
   bankId: string;
   bankName: string;

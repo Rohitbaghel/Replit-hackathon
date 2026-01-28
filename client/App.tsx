@@ -9,7 +9,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/lib/query-client";
 
-import RootStackNavigator from "@/navigation/RootStackNavigator";
+import AppNavigator from "@/navigation/AppNavigator";
+import { CardProvider } from "@/hooks/useCardContext";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 SplashScreen.preventAutoHideAsync();
@@ -22,16 +23,18 @@ export default function App() {
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <SafeAreaProvider>
-          <GestureHandlerRootView className="flex-1">
-            <KeyboardProvider>
-              <NavigationContainer>
-                <RootStackNavigator />
-              </NavigationContainer>
-              <StatusBar style="light" />
-            </KeyboardProvider>
-          </GestureHandlerRootView>
-        </SafeAreaProvider>
+        <CardProvider>
+          <SafeAreaProvider>
+            <GestureHandlerRootView className="flex-1" style={{ flex: 1, backgroundColor: "#0a101f" }}>
+              <KeyboardProvider>
+                <NavigationContainer>
+                  <AppNavigator />
+                </NavigationContainer>
+                <StatusBar style="light" />
+              </KeyboardProvider>
+            </GestureHandlerRootView>
+          </SafeAreaProvider>
+        </CardProvider>
       </QueryClientProvider>
     </ErrorBoundary>
   );
